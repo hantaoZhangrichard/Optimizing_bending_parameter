@@ -1,0 +1,12 @@
+name: bending_parameter
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - numpy
+  - pandas
+  - matplotlib
+  - pytorch
+  - seaborn
+  - scikit-learn
+  
