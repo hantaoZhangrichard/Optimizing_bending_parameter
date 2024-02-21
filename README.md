@@ -8,4 +8,5 @@
 - Build a naive surrogate model with multi-input (stress distribution and bending parameter) to predict next state stress distribution. Best validation MSE: 30~
 
 ## Things to be done
-- 
+- Finish the reinforcement learning framework with environment being the naive surrogate model
+- Write script to let Abaqus to run per-step analysis
