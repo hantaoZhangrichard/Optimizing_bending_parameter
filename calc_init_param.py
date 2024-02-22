@@ -23,7 +23,6 @@ def calc_init_param(data_path, user_config):
     )
     print(param_list)
 
-mould_name = sys.argv[1]
 
 def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
     '''
@@ -132,16 +131,15 @@ pre_length = 0.1
 k = 0.05   
 
 if __name__ == "__main__":
+    mould_name = sys.argv[1]
     data_path = "./data/mould_output/" + mould_name
-    '''
+    
     calc_init_param(data_path, user_config={
         "strip_length": 40,
         "pre_length": 0.1,
         "max_step_dis": 8,
         "k": 0.05
     })
-
-    '''
     
     for i in range(len(step_size)):
         D = step_size[i]

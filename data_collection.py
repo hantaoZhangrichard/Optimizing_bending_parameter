@@ -1,5 +1,4 @@
 import pandas as pd
-from io import StringIO
 import sys
 import os
 import subprocess
@@ -72,9 +71,9 @@ output_values = output.values
 rpt_path = \"{}\" + "springback_output" + ".rpt"
 
 with open(rpt_path, "w") as f:
-    f.write("Node_ID    Springback \n")
+    f.write("Node_ID    Springback \\n")
     for v in output.values:
-        f.write(str(v.nodeLabel) + " " + str(v.magnitude) + "\n")
+        f.write(str(v.nodeLabel) + " " + str(v.magnitude) + "\\n")
 
 f.close()\n
 '''
@@ -154,16 +153,28 @@ if __name__ == "__main__":
     springback_collection_script()
 
     p = subprocess.Popen(
-        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(dir, 'data_collection_script')}"],
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(dir, 'stress_collection_script')}"],
         cwd=dir,
         stderr=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
     p.wait(40)
     if p.poll() == 0:
-        print('Success')
+        print('Stress collection success')
     else:
-        print('Failure')
+        print('Stress collection failure')
+    
+    p = subprocess.Popen(
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(dir, 'springback_collection_script')}"],
+        cwd=dir,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
+    p.wait(40)
+    if p.poll() == 0:
+        print('Springback collection success')
+    else:
+        print('Springback collection failure')
 
     rpt_to_csv()
 
