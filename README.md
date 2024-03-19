@@ -9,4 +9,5 @@
 
 ## Things to be done
 - Finish the reinforcement learning framework with environment being the naive surrogate model
-- Write script to let Abaqus to run per-step analysis
+- Write script to let Abaqus run per-step analysis
+- Implement Genetic Algorithm in the environment
