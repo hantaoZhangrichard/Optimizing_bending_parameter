@@ -12,9 +12,6 @@ import torch.nn as nn
 import torch.optim as optim
 import shutil
 
-
-mould_name = "test6"
-
 # Define the Actor network
 class Actor(nn.Module):
     def __init__(self, input_dim, output_dim):
@@ -42,22 +39,21 @@ class Critic(nn.Module):
         return x
 
 class bending_env(gym.Env):
-    def __init__(self, mould_name, episode=None):
+    def __init__(self, episode=1):
 
         # Define the state space size
         self.state_space = spaces.Box(low=0, high=200, shape=(72, 7, 3), dtype=np.double)
 
         # Define the action space size
-        self.action_space = spaces.Discrete(n = 15, start = 1)
+        self.action_space = spaces.Discrete(n=15, start=1)
 
         # Initialize the current state with the stress distribution after pre-stretch
         self.state = None
 
         self.pre_idx = 0
-        self.pre_param = [321.1,0.0,0.0,0,-0.0,0.0]
+        self.pre_param = [321.1,0.0,0.0,0,-0.0,0.0]  # Pre-stretch length
 
         # Surrogate model
-        
         self.model = SurrogateNet_multiMLP(1512, 1512)
         self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
         checkpoint = torch.load("C:\Xie_and_Zhang\Surrogate_model.pth")
@@ -65,29 +61,47 @@ class bending_env(gym.Env):
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         
         # Bending Parameter list
-        self.param_list = [] # To be considered: add the pre-stretch parameter to it
+        self.param_list = []  # To be considered: add the pre-stretch parameter to it
 
-        self.max_step = 10
+        self.action_list = []  # Record series of actions for each episode for future use
 
-        self.mould_name = mould_name
-        self.episode_name = mould_name + "_episode" + str(episode)
-        self.data_path_2 = "./data/mould_output/" + self.episode_name
-        self.data_path_1 = "./data/model/" + self.episode_name
+        self.max_step = 10  # Max number of bending steps
+
+        self.num_episode = episode
+
+        self.mould_name = "test" + str(self.num_episode)
+
+        # Some useful data path
+        self.data_path_2 = "./data/mould_output/" + self.mould_name
+        self.data_path_1 = "./data/model/" + self.mould_name
 
     def reset(self):
-        # Reset the environment 
-        # Initialize the state with the stress distribution after pre-stretch
+        # Reset the environment
+        self.num_episode += 1
+
+        # Generate curve and mould for this episode
+        cmd = ['python ', 'gen_curve_and_mould.py', self.mould_name]
+        run_cmd(cmd)
+        shutil.copy(self.data_path_2 + '\\mould.stp', self.data_path_1)
+
+        '''
+            Initialize the state with the stress distribution after pre-stretch.
+            Since the pre-strech steps are all the same for each test, we simply used the one of test 0.
+        '''
         self.rec = geometric_reshape(self.mould_name)
-        csv_path = "/Xie_and_Zhang/data/model/{}/simulation/".format(mould_name) + "strip_mises_Step-0.csv"
+        csv_path = "/Xie_and_Zhang/data/model/test0/simulation/strip_mises_Step-0.csv"
         if os.path.exists(csv_path):
             df = pd.read_csv(csv_path)
             x = df["S_Mises"]
             x = torch.tensor(x, dtype=torch.float32)
         self.state = x
         # geometric_position(self.rec, x)
+
+        self.action_list = []  # Empty the action series
         return self.state
 
     def step(self, action):
+        self.action_list.append(action)
         print(self.state)
         strip_length = 40
         pre_length = 0.1
@@ -112,6 +126,11 @@ class bending_env(gym.Env):
         return self.state, reward, done, {}
 
     def calculate_reward(self):
+
+        # Save action series to a csv
+        action_list = pd.DataFrame(self.action_list)
+        action_list.to_csv()
+
         # Calculate the reward based on the current state
         if not os.path.exists(self.data_path_1):
             os.makedirs(self.data_path_1)
@@ -119,19 +138,18 @@ class bending_env(gym.Env):
             os.makedirs(self.data_path_2)
         print(self.param_list)
         rel_param_list = gen_param_csv(
-        param_list=self.param_list,
-        output_path=self.data_path_2,
-        pre_length=0.1,
-        version="base",
+            param_list=self.param_list,
+            output_path=self.data_path_2,
+            pre_length=0.1,
+            version="base",
         )
 
-        tasks = ['gen_curve_and_mould.py', 'gen_abaqus_model.py', 'gen_spring_back_model.py', 'data_collection.py']
+        tasks = ['gen_abaqus_model.py', 'gen_spring_back_model.py', 'data_collection.py']
 
         for i in range(len(tasks)):
-            cmd = ['python ', tasks[i], self.episode_name]
+            cmd = ['python ', tasks[i], self.mould_name]
             run_cmd(cmd)
-            if i == 0:
-                shutil.copy(self.data_path_2 + '\\mould.stp', self.data_path_1)
+            
         springback_path = self.data_path_1 + "/simulation/springback_output.csv" 
         springback = pd.read_csv(springback_path)["Springback"]
         reward = max(springback.tolist()) * 10
@@ -140,7 +158,7 @@ class bending_env(gym.Env):
 
 if __name__ == "__main__":
 
-    env = bending_env(mould_name, episode=1)
+    env = bending_env(episode=1)
     initial_state = env.reset()
     while True:
         action = np.random.randint(1, 5)

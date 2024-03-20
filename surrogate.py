@@ -159,13 +159,13 @@ def visualize(outputs, labels, rec):
 
 def geometric_reshape(mould_name):
     # Reconstruct the geometry of aluminium from coordinates
-    csv_path = "/Xie_and_Zhang/data/model/{}/simulation/".format(mould_name) + "strip_mises_" + "Step-0" + ".csv"
+    csv_path = "/Xie_and_Zhang/data/model/test0/simulation/strip_mises_Step-0.csv"
     df = pd.read_csv(csv_path)
     df = df.sort_values(by="Orig.X")
     # print(df["Orig.X"])
     x = df["Orig.X"].to_numpy()
     coor_x, counts_x = np.unique(x, return_counts=True)
-    rec = np.empty(shape=(72, 7, 3)) # Shape of the aluminium
+    rec = np.empty(shape=(72, 7, 3))  # Shape of the aluminium
     x_i = 0
     near_x = [] # store nodes with coordinate very close to each other
     near_x_count = 0
@@ -215,7 +215,7 @@ def geometric_reshape(mould_name):
 
 def geometric_position(rec, data):
     # Put stress value into the aluminium tensor 
-    result = np.empty(shape = rec.shape)
+    result = np.empty(shape=rec.shape)
     for i in range(result.shape[0]):
         for j in range(result.shape[1]):
             for k in range(result.shape[2]):
@@ -250,8 +250,8 @@ if __name__ == "__main__":
     train_dataset = TensorDataset(X_train, p_train, y_train)
     val_dataset = TensorDataset(X_val, p_val, y_val)
 
-    train_loader = DataLoader(train_dataset, batch_size = 4, shuffle = True)
-    val_loader = DataLoader(val_dataset, batch_size = 4, shuffle = False)
+    train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=4, shuffle=False)
 
     input_dim = X_stress.shape[1]
     output_dim = y.shape[1]
@@ -290,7 +290,7 @@ if __name__ == "__main__":
     print("Best_vloss:{}".format(best_vloss))
 
     torch.save({
-    'model_state_dict': model.state_dict(),
-    'optimizer_state_dict': optimizer.state_dict(),
-    # Add any other information you want to save
+        'model_state_dict': model.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict(),
+        # Add any other information you want to save
     }, 'Surrogate_model.pth')

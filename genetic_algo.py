@@ -1,9 +1,9 @@
 import numpy as np
-# from rl_env import bending_env
+from rl_env import bending_env
 
 # Genetic Algorithm Parameters
-POPULATION_SIZE = 10
-MUTATION_RATE = 0.1
+population_size = 10
+mutation_rate = 0.1
 num_step = 4
 
 # Initialize population
@@ -73,11 +73,19 @@ def genetic_algorithm(target_string, population_size, mutation_rate):
 print(f"Solution found in {generations} generations: {best_individual}")'''
 
 if __name__ == "__main__":
-    population = initialize_population(POPULATION_SIZE, num_step)
-    fitness = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    population = initialize_population(population_size, num_step)
+    fitness = 
     parents = select_parents(population, fitness)
     print(parents)
     parent1 = parents[0]
     parent2 = parents[1]
     child1, child2 = crossover(parent1, parent2)
-    print(mutate(child1, MUTATION_RATE))
+    print(mutate(child1, mutation_rate))
+    num_generation = 5
+    for i in range(num_generation):
+        fitness = []
+        for j in range(population_size):
+            env = bending_env(str(i), episode=str(j))
+            individual = population[j]
+            fitness = 
+
