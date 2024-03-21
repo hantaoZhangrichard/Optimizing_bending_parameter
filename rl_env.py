@@ -56,7 +56,7 @@ class bending_env(gym.Env):
         # Surrogate model
         self.model = SurrogateNet_multiMLP(1512, 1512)
         self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
-        checkpoint = torch.load("C:\Xie_and_Zhang\Surrogate_model.pth")
+        checkpoint = torch.load("C:\Optimizing_bending_parameter\Surrogate_model.pth")
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         
@@ -129,7 +129,7 @@ class bending_env(gym.Env):
 
         # Save action series to a csv
         action_list = pd.DataFrame(self.action_list)
-        action_list.to_csv()
+        action_list.to_csv(self.data_path_1 + "action_list.csv")
 
         # Calculate the reward based on the current state
         if not os.path.exists(self.data_path_1):

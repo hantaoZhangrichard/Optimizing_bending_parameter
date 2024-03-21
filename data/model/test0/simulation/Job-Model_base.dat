@@ -1,0 +1,391 @@
+1
+
+   Abaqus 2021                                  Date 21-3ÔÂ-2024   Time 03:43:45
+   For use by Supplied by Team-SolidSQUAD under license from Dassault Systemes or its subsidiary.
+
+
+
+                         The Abaqus Software is a product of:
+
+                           Dassault Systemes SIMULIA Corp.
+                           1301 Atwood Avenue, Suite 101W
+                              Johnston, RI 02919, USA
+ 
+
+
+                   The Abaqus Software is available only under license
+                   from Dassault Systemes or its subsidiary and may be
+                   used or reproduced only in accordance with the terms
+                   of such license.
+ 
+                          On machine cloudam 
+                          you are authorized to run
+                          Abaqus/Explicit until 31-Dec-2055
+
+                          Your site id is:  
+
+
+ 
+                    For assistance or any other information you may
+                    obtain contact information for your local office
+                    from the world wide web at:
+
+                      http://www.3ds.com/products/simulia/locations/
+
+ 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                *                                                         * 
+                *                   *****************                     * 
+                *                   *  N O T I C E  *                     * 
+                *                   *****************                     * 
+                *                                                         * 
+                *                                                         * 
+                *                       Abaqus 2021                       * 
+                *                                                         * 
+                *          BUILD ID: 2020_03_06-22.50.37 167380           * 
+                *                                                         * 
+                *                                                         * 
+                *  Please make sure you are using                         * 
+                *  release Abaqus 2021 manuals                            * 
+                *  plus the notes accompanying this release.              * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+ 
+
+
+
+     PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   *******************************************************
+
+
+     END PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   ***********************************************************
+
+
+
+
+     OPTIONS BEING PROCESSED
+   ***************************
+
+
+  *Heading
+  *Node
+  *Element, type=R3D4
+  *Element, type=MASS
+  *Element, type=ROTARYI
+  *Nset, nset=ASSEMBLY_TRANSLATE_ROTATE-REFPT_
+  *Nset, nset=ASSEMBLY_TRANSLATE__PICKEDSET11
+  *Elset, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *Elset, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_MASS_
+  *Elset, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_ROTI_
+  *Node
+  *Element, type=R3D4
+  *Element, type=MASS
+  *Element, type=ROTARYI
+  *Nset, nset=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_
+  *Nset, nset=ASSEMBLY_ROTATE-Z__PICKEDSET11
+  *Elset, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *Elset, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_MASS_
+  *Elset, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_ROTI_
+  *Node
+  *Element, type=R3D4
+  *Element, type=MASS
+  *Element, type=ROTARYI
+  *Nset, nset=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_
+  *Nset, nset=ASSEMBLY_ROTATE-Y__PICKEDSET11
+  *Elset, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *Elset, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_MASS_
+  *Elset, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_ROTI_
+  *Node
+  *Element, type=R3D4
+  *Element, type=MASS
+  *Element, type=ROTARYI
+  *Nset, nset=ASSEMBLY_ROTATE-X_ROTATE-REFPT_
+  *Nset, nset=ASSEMBLY_ROTATE-X__PICKEDSET11
+  *Elset, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *Elset, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_MASS_
+  *Elset, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_ROTI_
+  *Node
+  *Element, type=C3D8R
+  *Nset, nset=ASSEMBLY_STRIP_SET_ALL
+  *Nset, nset=ASSEMBLY_STRIP_SET_FIXED
+  *Elset, elset=ASSEMBLY_STRIP_SET_ALL
+  *Elset, elset=ASSEMBLY_STRIP_SET_FIXED
+  *Elset, elset=ASSEMBLY_STRIP__SURF_FIXED_S5
+  *Elset, elset=ASSEMBLY_STRIP__SURF_FREE_S3
+  *Elset, elset=ASSEMBLY_STRIP__SURF_LENGTH_S1
+  *Elset, elset=ASSEMBLY_STRIP__SURF_LENGTH_S2
+  *Elset, elset=ASSEMBLY_STRIP__SURF_LENGTH_S4
+  *Elset, elset=ASSEMBLY_STRIP__SURF_LENGTH_S6
+  *Node
+  *Element, type=R3D4
+  *Nset, nset=ASSEMBLY_MOULD_MOULD-REFPT_
+  *Elset, elset=ASSEMBLY_MOULD_MOULD
+  *Elset, elset=ASSEMBLY_MOULD__SURF_DOWN_SNEG
+  *Elset, elset=ASSEMBLY_MOULD__SURF_UP_SPOS
+  *Element, type=CONN3D2
+  *Nset, nset=ASSEMBLY_WIRE-X-SET-1
+  *Nset, nset=ASSEMBLY_WIRE-Y-SET-1
+  *Nset, nset=ASSEMBLY_WIRE-Z-SET-1
+  *Nset, nset=ASSEMBLY__PICKEDSET24
+  *Nset, nset=ASSEMBLY__PICKEDSET25
+  *Nset, nset=ASSEMBLY__PICKEDSET26
+  *Nset, nset=ASSEMBLY__PICKEDSET27
+  *Nset, nset=ASSEMBLY__PICKEDSET28
+  *Elset, elset=ASSEMBLY_WIRE-X-SET-1
+  *Elset, elset=ASSEMBLY_WIRE-Y-SET-1
+  *Elset, elset=ASSEMBLY_WIRE-Z-SET-1
+  *Elset, elset=ASSEMBLY__CLAMP_LEFT_SPOS
+  *Elset, elset=ASSEMBLY__PICKEDSET29
+  *Elset, elset=ASSEMBLY__PICKEDSET30
+  *Elset, elset=ASSEMBLY__PICKEDSET31
+  *material, name=AL
+  *damping, alpha=130
+  *density
+  *elastic
+  *plastic
+  *mass, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_MASS_
+  *rotaryinertia, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_ROTI_
+  *connectorsection, elset=ASSEMBLY_WIRE-Z-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-Y-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-X-SET-1, behavior=CONNSECT-HINGE
+  *connectorbehavior, name=CONNSECT-HINGE
+  *connectorelasticity, rigid
+  *orientation, name=ASSEMBLY_CSYS-Z
+  *orientation, name=ASSEMBLY_CSYS-Y
+  *orientation, name=ASSEMBLY_CSYS-X
+  *solidsection, elset=ASSEMBLY_STRIP_SET_ALL, material=AL
+  *solidsection, elset=ASSEMBLY_STRIP_SET_ALL, material=AL
+  *mass, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_MASS_
+  *mass, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_MASS_
+  *rotaryinertia, elset=ASSEMBLY_TRANSLATE__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-Z__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-Y__PICKEDSET11_INERTIA_ROTI_
+  *rotaryinertia, elset=ASSEMBLY_ROTATE-X__PICKEDSET11_INERTIA_ROTI_
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_LENGTH
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FREE
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FIXED
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_DOWN
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_UP
+  *surface, type=ELEMENT, name=ASSEMBLY_CLAMP_LEFT
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_LENGTH
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FREE
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FIXED
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_DOWN
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_UP
+  *surface, type=ELEMENT, name=ASSEMBLY_CLAMP_LEFT
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *tie, name=ASSEMBLY_CONSTRAINT_CLAMP_STRIP, adjust=YES
+  *surfaceinteraction, name=INTPROP-1
+  *friction
+  *connectorsection, elset=ASSEMBLY_WIRE-Z-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-Y-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-X-SET-1, behavior=CONNSECT-HINGE
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *solidsection, elset=ASSEMBLY_STRIP_SET_ALL, material=AL
+  *tie, name=ASSEMBLY_CONSTRAINT_CLAMP_STRIP, adjust=YES
+  *tie, name=ASSEMBLY_CONSTRAINT_CLAMP_STRIP, adjust=YES
+
+ ***NOTE:  Total of 21 slave nodes for tie definition 
+          ASSEMBLY_CONSTRAINT_CLAMP_STRIP with master surface 
+          ASSEMBLY_CLAMP_LEFT and slave surface ASSEMBLY_STRIP_SURF_FREE were 
+          tied.
+  *rigidbody, refnode=ASSEMBLY_TRANSLATE_ROTATE-REFPT_, elset=ASSEMBLY_TRANSLATE_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Z_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Z_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-Y_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-Y_ROTATE
+  *rigidbody, refnode=ASSEMBLY_ROTATE-X_ROTATE-REFPT_, elset=ASSEMBLY_ROTATE-X_ROTATE
+  *rigidbody, refnode=ASSEMBLY_MOULD_MOULD-REFPT_, elset=ASSEMBLY_MOULD_MOULD
+  *connectorsection, elset=ASSEMBLY_WIRE-Z-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-Y-SET-1, behavior=CONNSECT-HINGE
+  *connectorsection, elset=ASSEMBLY_WIRE-X-SET-1, behavior=CONNSECT-HINGE
+  *friction
+  *amplitude, name=AMP_BASIC, definition=SMOOTHSTEP
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *Step, name=Step-0, nlgeom=YES
+  *Step, name=Step-1, nlgeom=YES
+  *Step, name=Step-2, nlgeom=YES
+  *connectormotion
+  *connectormotion
+  *connectormotion
+  *Step, name=Step-0, nlgeom=YES
+  *dynamic, explicit
+  *fixedmassscaling, factor=200
+  *connectormotion, amplitude=AMP_BASIC
+
+ ***WARNING: THE OPTION *CONNECTOR MOTION,TYPE=DISPLACEMENT HAS BEEN USED; 
+             CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS 
+             PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF 
+             TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO 
+             SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED
+  *connectormotion, amplitude=AMP_BASIC
+  *connectormotion, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *endstep
+  *Step, name=Step-1, nlgeom=YES
+  *dynamic, explicit
+  *connectormotion, amplitude=AMP_BASIC
+  *connectormotion, amplitude=AMP_BASIC
+  *connectormotion, amplitude=AMP_BASIC
+
+ ***WARNING: FINITE ROTATION CONNECTOR MOTION SPECIFIED IN MULTISTEP 
+             THREE-DIMENSIONAL ANALYSIS. TYPE=VELOCITY SHOULD BE USED IF THE 
+             DIRECTION OF ROTATION VECTOR CHANGES BETWEEN STEPS.
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *endstep
+  *Step, name=Step-2, nlgeom=YES
+  *dynamic, explicit
+  *connectormotion, amplitude=AMP_BASIC
+  *connectormotion, amplitude=AMP_BASIC
+  *connectormotion, amplitude=AMP_BASIC
+
+ ***WARNING: FINITE ROTATION CONNECTOR MOTION SPECIFIED IN MULTISTEP 
+             THREE-DIMENSIONAL ANALYSIS. TYPE=VELOCITY SHOULD BE USED IF THE 
+             DIRECTION OF ROTATION VECTOR CHANGES BETWEEN STEPS.
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *endstep
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_LENGTH
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FREE
+  *surface, type=ELEMENT, name=ASSEMBLY_STRIP_SURF_FIXED
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_DOWN
+  *surface, type=ELEMENT, name=ASSEMBLY_MOULD_SURF_UP
+  *surface, type=ELEMENT, name=ASSEMBLY_CLAMP_LEFT
+  *tie, name=ASSEMBLY_CONSTRAINT_CLAMP_STRIP, adjust=YES
+  *surfaceinteraction, name=INTPROP-1
+  *friction
+  *surfacebehavior, pressure-overclosure=HARD
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *contact, op=NEW
+
+ ***WARNING: OP=NEW on *CONTACT is ignored when the general contact definition 
+             is specified as model data.
+  *contactinclusions
+  *contactpropertyassignment
+  *Step, name=Step-0, nlgeom=YES
+  *dynamic, explicit
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *endstep
+  *Step, name=Step-1, nlgeom=YES
+  *dynamic, explicit
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *endstep
+  *Step, name=Step-2, nlgeom=YES
+  *dynamic, explicit
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *boundary, amplitude=AMP_BASIC
+  *endstep
+
+
+
+                            P R O B L E M   S I Z E
+
+
+          NUMBER OF ELEMENTS IS                                  2071
+          NUMBER OF NODES IS                                     2750
+          NUMBER OF NODES DEFINED BY THE USER                    2738
+          NUMBER OF INTERNAL NODES GENERATED BY THE PROGRAM        12
+          TOTAL NUMBER OF VARIABLES IN THE MODEL                 8343
+          (DEGREES OF FREEDOM PLUS MAX NO. OF ANY LAGRANGE MULTIPLIER
+           VARIABLES. INCLUDE *PRINT,SOLVE=YES TO GET THE ACTUAL NUMBER.)
+
+
+
+                              END OF USER INPUT PROCESSING
+
+
+
+     JOB TIME SUMMARY
+       USER TIME (SEC)      =  0.20000    
+       SYSTEM TIME (SEC)    =  0.10000    
+       TOTAL CPU TIME (SEC) =  0.30000    
+       WALLCLOCK TIME (SEC) =          1

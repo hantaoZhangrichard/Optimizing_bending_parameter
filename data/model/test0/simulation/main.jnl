@@ -1,0 +1,437 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Model(modelType=STANDARD_EXPLICIT, name='Model_base')
+mdb.models['Model_base'].ConstrainedSketch(name='__profile__', sheetSize=15)
+mdb.models['Model_base'].sketches['__profile__'].rectangle(point1=(5, 5), 
+    point2=(-5, -5))
+mdb.models['Model_base'].Part(dimensionality=THREE_D, name='rotate', type=
+    DISCRETE_RIGID_SURFACE)
+mdb.models['Model_base'].parts['rotate'].BaseSolidExtrude(depth=4.0, sketch=
+    mdb.models['Model_base'].sketches['__profile__'])
+del mdb.models['Model_base'].sketches['__profile__']
+mdb.models['Model_base'].parts['rotate'].ReferencePoint(point=(0.0, 0.0, 2.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(0.0, 5, 
+    2.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(5, 0.0, 
+    2.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(0.0, 
+    -5, 2.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(-5, 
+    0.0, 2.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(0.0, 
+    0.0, 0.0))
+mdb.models['Model_base'].parts['rotate'].DatumPointByCoordinate(coords=(0.0, 
+    0.0, 4.0))
+mdb.models['Model_base'].parts['rotate'].RemoveCells(cellList=
+    mdb.models['Model_base'].parts['rotate'].cells.getSequenceFromMask((
+    '[#1 ]', ), ))
+mdb.models['Model_base'].parts['rotate'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=20.0)
+mdb.models['Model_base'].parts['rotate'].generateMesh()
+mdb.models['Model_base'].parts['rotate'].engineeringFeatures.PointMassInertia(
+    alpha=0.0, composite=0.0, i11=1e-09, i22=1e-09, i33=1e-09, mass=1e-09, 
+    name='inertia', region=Region(
+    vertices=mdb.models['Model_base'].parts['rotate'].vertices.getSequenceFromMask(
+    mask=('[#ff ]', ), ), referencePoints=(
+    mdb.models['Model_base'].parts['rotate'].referencePoints[2], )))
+mdb.openStep('C:/Optimizing_bending_parameter/data/model/test0/mould.stp', 
+    scaleFromFile=OFF)
+mdb.models['Model_base'].PartFromGeometryFile(combine=True, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='mould', type=DEFORMABLE_BODY)
+mdb.models['Model_base'].parts['mould'].setValues(space=THREE_D, type=
+    DISCRETE_RIGID_SURFACE)
+mdb.models['Model_base'].parts['mould'].ReferencePoint(point=
+    mdb.models['Model_base'].parts['mould'].vertices[0])
+mdb.models['Model_base'].parts['mould'].Surface(name='surf_down', side2Faces=
+    mdb.models['Model_base'].parts['mould'].faces.getSequenceFromMask(mask=(
+    '[#3 ]', ), ))
+mdb.models['Model_base'].parts['mould'].Surface(name='surf_up', side1Faces=
+    mdb.models['Model_base'].parts['mould'].faces.getSequenceFromMask(mask=(
+    '[#3 ]', ), ))
+mdb.models['Model_base'].ConstrainedSketch(name='__profile__', sheetSize=100.0)
+mdb.models['Model_base'].sketches['__profile__'].rectangle(point1=(-0.2, -2.0), 
+    point2=(0, 2.0))
+mdb.models['Model_base'].Part(dimensionality=THREE_D, name='strip', type=
+    DEFORMABLE_BODY)
+mdb.models['Model_base'].parts['strip'].BaseSolidExtrude(depth=50, sketch=
+    mdb.models['Model_base'].sketches['__profile__'])
+del mdb.models['Model_base'].sketches['__profile__']
+mdb.models['Model_base'].parts['strip'].Surface(name='surf_length', side1Faces=
+    mdb.models['Model_base'].parts['strip'].faces.getSequenceFromMask(mask=(
+    '[#f ]', ), ))
+mdb.models['Model_base'].parts['strip'].Surface(name='surf_free', side1Faces=
+    mdb.models['Model_base'].parts['strip'].faces.getSequenceFromMask(mask=(
+    '[#10 ]', ), ))
+mdb.models['Model_base'].parts['strip'].Surface(name='surf_fixed', side1Faces=
+    mdb.models['Model_base'].parts['strip'].faces.getSequenceFromMask(mask=(
+    '[#20 ]', ), ))
+mdb.models['Model_base'].parts['strip'].Set(faces=
+    mdb.models['Model_base'].parts['strip'].faces.getSequenceFromMask(mask=(
+    '[#20 ]', ), ), name='set_fixed')
+mdb.models['Model_base'].parts['strip'].Set(cells=
+    mdb.models['Model_base'].parts['strip'].cells.getSequenceFromMask(mask=(
+    '[#1 ]', ), ), name='set_all')
+mdb.models['Model_base'].Material(name='AL')
+mdb.models['Model_base'].materials['AL'].Density(table=((2.7e-09, ), ))
+mdb.models['Model_base'].materials['AL'].Elastic(table=((69000.0, 0.37), ))
+mdb.models['Model_base'].materials['AL'].Plastic(table=[(155.2387948, 0.0), (
+    157.2580093, 0.000240422), (159.0641836, 0.000565474), (160.7413561, 
+    0.000913373), (162.3659012, 0.001341927), (163.9012821, 0.001871773), (
+    165.3514806, 0.00236361), (166.7479583, 0.002846528), (168.0804994, 
+    0.003420002), (170.3955656, 0.003910109), (171.483574, 0.0044491), (
+    172.5161607, 0.005127747), (173.5806354, 0.005904094), (174.5560144, 
+    0.006701704), (175.4000434, 0.007511661), (176.3259781, 0.008318971), (
+    177.1454839, 0.00912814), (177.8864309, 0.009869521), (178.6629142, 
+    0.010727636), (179.4187407, 0.011614992), (180.1240757, 0.012591187), (
+    180.8709855, 0.013565402), (181.5335261, 0.014442568), (182.1445537, 
+    0.01532997), (182.8367231, 0.016283154), (183.4655953, 0.017256476), (
+    184.0663523, 0.018219723), (184.6787899, 0.019240305), (185.2549637, 
+    0.020133911), (185.7591619, 0.021077132), (186.3321057, 0.022163796), (
+    186.8248449, 0.023183113), (187.2607698, 0.024261002), (187.6971593, 
+    0.025337696), (188.0326923, 0.026386549), (188.3327999, 0.027464177), (
+    188.5352856, 0.028388233), (188.6662972, 0.02937111), (188.727776, 
+    0.030132647), (188.7496429, 0.030904199)])
+mdb.models['Model_base'].HomogeneousSolidSection(material='AL', name=
+    'Section-AL', thickness=None)
+mdb.models['Model_base'].materials['AL'].Damping(alpha=130)
+mdb.models['Model_base'].parts['strip'].seedEdgeByNumber(constraint=FINER, 
+    edges=mdb.models['Model_base'].parts['strip'].edges.getSequenceFromMask((
+    '[#20 ]', ), ), number=60)
+mdb.models['Model_base'].parts['strip'].seedEdgeByNumber(constraint=FINER, 
+    edges=mdb.models['Model_base'].parts['strip'].edges.getSequenceFromMask((
+    '[#10 ]', ), ), number=2)
+mdb.models['Model_base'].parts['strip'].seedEdgeByNumber(constraint=FINER, 
+    edges=mdb.models['Model_base'].parts['strip'].edges.getSequenceFromMask((
+    '[#80 ]', ), ), number=6)
+mdb.models['Model_base'].parts['strip'].generateMesh()
+mdb.models['Model_base'].parts['mould'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1)
+mdb.models['Model_base'].parts['mould'].generateMesh()
+mdb.models['Model_base'].parts['strip'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model_base'].parts['strip'].sets['set_all'], sectionName=
+    'Section-AL', thicknessAssignment=FROM_SECTION)
+mdb.models['Model_base'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='translate', 
+    part=mdb.models['Model_base'].parts['rotate'])
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('translate', ), 
+    vector=(0.0, 0.0, -2.0))
+mdb.models['Model_base'].rootAssembly.rotate(angle=90.0, axisDirection=(0.0, 
+    1.0, 0.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('translate', ))
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('translate', ), 
+    vector=(371, 0, 0))
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='rotate-z', 
+    part=mdb.models['Model_base'].parts['rotate'])
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-z', ), 
+    vector=(0.0, 0.0, -2.0))
+mdb.models['Model_base'].rootAssembly.rotate(angle=90.0, axisDirection=(0.0, 
+    0.0, 1.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('rotate-z', ))
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-z', ), 
+    vector=(331, 0, 0))
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='rotate-y', 
+    part=mdb.models['Model_base'].parts['rotate'])
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-y', ), 
+    vector=(0.0, 0.0, -2.0))
+mdb.models['Model_base'].rootAssembly.rotate(angle=90.0, axisDirection=(1.0, 
+    0.0, 0.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('rotate-y', ))
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-y', ), 
+    vector=(255, 0, 0))
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='rotate-x', 
+    part=mdb.models['Model_base'].parts['rotate'])
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-x', ), 
+    vector=(0.0, 0.0, -2.0))
+mdb.models['Model_base'].rootAssembly.rotate(angle=90.0, axisDirection=(0.0, 
+    1.0, 0.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('rotate-x', ))
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('rotate-x', ), 
+    vector=(52.0, 0, 0))
+mdb.models['Model_base'].rootAssembly.DatumCsysByThreePoints(coordSysType=
+    CARTESIAN, name='csys-z', origin=
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2]
+    , point1=
+    mdb.models['Model_base'].rootAssembly.instances['translate'].datums[6], 
+    point2=
+    mdb.models['Model_base'].rootAssembly.instances['translate'].datums[3])
+mdb.models['Model_base'].rootAssembly.DatumCsysByThreePoints(coordSysType=
+    CARTESIAN, name='csys-y', origin=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-z'].referencePoints[2]
+    , point1=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-z'].datums[4], 
+    point2=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-z'].datums[8])
+mdb.models['Model_base'].rootAssembly.DatumCsysByThreePoints(coordSysType=
+    CARTESIAN, name='csys-x', origin=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-y'].referencePoints[2]
+    , point1=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-y'].datums[4], 
+    point2=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-y'].datums[7])
+mdb.models['Model_base'].ConnectorSection(assembledType=HINGE, name=
+    'ConnSect-Hinge')
+mdb.models['Model_base'].sections['ConnSect-Hinge'].setValues(behaviorOptions=(
+    ConnectorElasticity(behavior=RIGID, table=(), independentComponents=(), 
+    components=(4, )), ))
+mdb.models['Model_base'].sections['ConnSect-Hinge'].behaviorOptions[0].ConnectorOptions(
+    )
+mdb.models['Model_base'].rootAssembly.WirePolyLine(mergeType=IMPRINT, meshable=
+    False, points=((
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2], 
+    mdb.models['Model_base'].rootAssembly.instances['rotate-z'].referencePoints[2]), 
+    ))
+mdb.models['Model_base'].rootAssembly.features.changeKey(fromName='Wire-1', 
+    toName='wire-z')
+mdb.models['Model_base'].rootAssembly.Set(edges=
+    mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(('[#1 ]', 
+    ), ), name='wire-z-Set-1')
+mdb.models['Model_base'].rootAssembly.SectionAssignment(region=
+    mdb.models['Model_base'].rootAssembly.sets['wire-z-Set-1'], sectionName=
+    'ConnSect-Hinge')
+mdb.models['Model_base'].rootAssembly.sectionAssignments[0].getSet()
+mdb.models['Model_base'].rootAssembly.ConnectorOrientation(localCsys1=
+    mdb.models['Model_base'].rootAssembly.datums[10], region=
+    mdb.models['Model_base'].rootAssembly.allSets['wire-z-Set-1'])
+mdb.models['Model_base'].rootAssembly.WirePolyLine(mergeType=IMPRINT, meshable=
+    False, points=((
+    mdb.models['Model_base'].rootAssembly.instances['rotate-z'].referencePoints[2], 
+    mdb.models['Model_base'].rootAssembly.instances['rotate-y'].referencePoints[2]), 
+    ))
+mdb.models['Model_base'].rootAssembly.features.changeKey(fromName='Wire-1', 
+    toName='wire-y')
+mdb.models['Model_base'].rootAssembly.Set(edges=
+    mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(('[#1 ]', 
+    ), ), name='wire-y-Set-1')
+mdb.models['Model_base'].rootAssembly.SectionAssignment(region=
+    mdb.models['Model_base'].rootAssembly.sets['wire-y-Set-1'], sectionName=
+    'ConnSect-Hinge')
+mdb.models['Model_base'].rootAssembly.sectionAssignments[1].getSet()
+mdb.models['Model_base'].rootAssembly.ConnectorOrientation(localCsys1=
+    mdb.models['Model_base'].rootAssembly.datums[11], region=
+    mdb.models['Model_base'].rootAssembly.allSets['wire-y-Set-1'])
+mdb.models['Model_base'].rootAssembly.WirePolyLine(mergeType=IMPRINT, meshable=
+    False, points=((
+    mdb.models['Model_base'].rootAssembly.instances['rotate-y'].referencePoints[2], 
+    mdb.models['Model_base'].rootAssembly.instances['rotate-x'].referencePoints[2]), 
+    ))
+mdb.models['Model_base'].rootAssembly.features.changeKey(fromName='Wire-1', 
+    toName='wire-x')
+mdb.models['Model_base'].rootAssembly.Set(edges=
+    mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(('[#1 ]', 
+    ), ), name='wire-x-Set-1')
+mdb.models['Model_base'].rootAssembly.SectionAssignment(region=
+    mdb.models['Model_base'].rootAssembly.sets['wire-x-Set-1'], sectionName=
+    'ConnSect-Hinge')
+mdb.models['Model_base'].rootAssembly.sectionAssignments[2].getSet()
+mdb.models['Model_base'].rootAssembly.ConnectorOrientation(localCsys1=
+    mdb.models['Model_base'].rootAssembly.datums[12], region=
+    mdb.models['Model_base'].rootAssembly.allSets['wire-x-Set-1'])
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='strip', 
+    part=mdb.models['Model_base'].parts['strip'])
+mdb.models['Model_base'].rootAssembly.rotate(angle=90.0, axisDirection=(0.0, 
+    1.0, 0.0), axisPoint=(0.0, 0.0, 0.0), instanceList=('strip', ))
+mdb.models['Model_base'].rootAssembly.Instance(dependent=ON, name='mould', 
+    part=mdb.models['Model_base'].parts['mould'])
+mdb.models['Model_base'].rootAssembly.translate(instanceList=('mould', ), 
+    vector=(0.0, -8.0, 0.0))
+mdb.models['Model_base'].ContactProperty('IntProp-1')
+mdb.models['Model_base'].interactionProperties['IntProp-1'].TangentialBehavior(
+    dependencies=0, directionality=ISOTROPIC, elasticSlipStiffness=None, 
+    formulation=PENALTY, fraction=0.005, maximumElasticSlip=FRACTION, 
+    pressureDependency=OFF, shearStressLimit=None, slipRateDependency=OFF, 
+    table=((0.1, ), ), temperatureDependency=OFF)
+mdb.models['Model_base'].interactionProperties['IntProp-1'].NormalBehavior(
+    allowSeparation=ON, constraintEnforcementMethod=DEFAULT, 
+    pressureOverclosure=HARD)
+mdb.models['Model_base'].ContactExp(createStepName='Initial', name='Int-1')
+mdb.models['Model_base'].interactions['Int-1'].includedPairs.setValuesInStep(
+    addPairs=((
+    mdb.models['Model_base'].rootAssembly.instances['mould'].surfaces['surf_up'], 
+    mdb.models['Model_base'].rootAssembly.instances['strip'].surfaces['surf_length']), 
+    ), stepName='Initial', useAllstar=OFF)
+mdb.models['Model_base'].interactions['Int-1'].contactPropertyAssignments.appendInStep(
+    assignments=((GLOBAL, SELF, 'IntProp-1'), ), stepName='Initial')
+mdb.models['Model_base'].interactions['Int-1'].includedPairs.setValuesInStep(
+    addPairs=((
+    mdb.models['Model_base'].rootAssembly.instances['mould'].surfaces['surf_down'], 
+    mdb.models['Model_base'].rootAssembly.instances['strip'].surfaces['surf_length']), 
+    ), stepName='Initial')
+mdb.models['Model_base'].rootAssembly.Surface(name='clamp_left', side1Faces=
+    mdb.models['Model_base'].rootAssembly.instances['rotate-x'].faces.getSequenceFromMask(
+    mask=('[#20 ]', ), ))
+mdb.models['Model_base'].Tie(adjust=ON, master=
+    mdb.models['Model_base'].rootAssembly.surfaces['clamp_left'], name=
+    'constraint_clamp_strip', positionToleranceMethod=COMPUTED, slave=
+    mdb.models['Model_base'].rootAssembly.instances['strip'].surfaces['surf_free']
+    , thickness=ON, tieRotations=ON)
+mdb.models['Model_base'].EncastreBC(createStepName='Initial', localCsys=None, 
+    name='mould', region=Region(referencePoints=(
+    mdb.models['Model_base'].rootAssembly.instances['mould'].referencePoints[2], 
+    )))
+mdb.models['Model_base'].EncastreBC(createStepName='Initial', localCsys=None, 
+    name='strip_fixed', region=
+    mdb.models['Model_base'].rootAssembly.instances['strip'].sets['set_fixed'])
+mdb.models['Model_base'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, fieldName='', localCsys=None, name=
+    'translate_fix_rotate', region=Region(referencePoints=(
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2], 
+    )), u1=UNSET, u2=UNSET, u3=UNSET, ur1=SET, ur2=SET, ur3=SET)
+mdb.models['Model_base'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, fieldName='', localCsys=None, name=
+    'translate_x', region=Region(referencePoints=(
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2], 
+    )), u1=SET, u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model_base'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, fieldName='', localCsys=None, name=
+    'translate_y', region=Region(referencePoints=(
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2], 
+    )), u1=UNSET, u2=SET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model_base'].DisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, fieldName='', localCsys=None, name=
+    'translate_z', region=Region(referencePoints=(
+    mdb.models['Model_base'].rootAssembly.instances['translate'].referencePoints[2], 
+    )), u1=UNSET, u2=UNSET, u3=SET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model_base'].ConnDisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, name='rotate_z', region=Region(
+    edges=mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(
+    mask=('[#4 ]', ), )), u1=UNSET, u2=UNSET, u3=UNSET, ur1=SET, ur2=UNSET, 
+    ur3=UNSET)
+mdb.models['Model_base'].ConnDisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, name='rotate_y', region=Region(
+    edges=mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(
+    mask=('[#2 ]', ), )), u1=UNSET, u2=UNSET, u3=UNSET, ur1=SET, ur2=UNSET, 
+    ur3=UNSET)
+mdb.models['Model_base'].ConnDisplacementBC(amplitude=UNSET, createStepName=
+    'Initial', distributionType=UNIFORM, name='rotate_x', region=Region(
+    edges=mdb.models['Model_base'].rootAssembly.edges.getSequenceFromMask(
+    mask=('[#1 ]', ), )), u1=UNSET, u2=UNSET, u3=UNSET, ur1=SET, ur2=UNSET, 
+    ur3=UNSET)
+mdb.models['Model_base'].SmoothStepAmplitude(data=((0.0, 0.0), (0.1, 1.0)), 
+    name='amp_basic', timeSpan=STEP)
+mdb.models['Model_base'].ExplicitDynamicsStep(improvedDtMethod=ON, massScaling=
+    ((SEMI_AUTOMATIC, MODEL, AT_BEGINNING, 200, 0.0, None, 0, 0, 0.0, 0.0, 0, 
+    None), ), name='Step-0', previous='Initial', timePeriod=0.1)
+mdb.models['Model_base'].boundaryConditions['translate_fix_rotate'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', ur1=0, ur2=0, ur3=0)
+mdb.models['Model_base'].boundaryConditions['translate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', u1=0.1)
+mdb.models['Model_base'].boundaryConditions['translate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', u2=0)
+mdb.models['Model_base'].boundaryConditions['translate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', u3=0)
+mdb.models['Model_base'].boundaryConditions['rotate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', ur1=0)
+mdb.models['Model_base'].boundaryConditions['rotate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', ur1=0)
+mdb.models['Model_base'].boundaryConditions['rotate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-0', ur1=0)
+mdb.models['Model_base'].ExplicitDynamicsStep(improvedDtMethod=ON, name=
+    'Step-1', previous='Step-0', timePeriod=0.1)
+mdb.models['Model_base'].boundaryConditions['translate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', u1=-0.152115084632555)
+mdb.models['Model_base'].boundaryConditions['translate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', u2=11.9845179598378)
+mdb.models['Model_base'].boundaryConditions['translate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', u3=0.0)
+mdb.models['Model_base'].boundaryConditions['rotate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', ur1=0.0390341017669561)
+mdb.models['Model_base'].boundaryConditions['rotate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', ur1=0.0)
+mdb.models['Model_base'].boundaryConditions['rotate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-1', ur1=0.0)
+mdb.models['Model_base'].ExplicitDynamicsStep(improvedDtMethod=ON, name=
+    'Step-2', previous='Step-1', timePeriod=0.1)
+mdb.models['Model_base'].boundaryConditions['translate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', u1=-0.191257641492655)
+mdb.models['Model_base'].boundaryConditions['translate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', u2=4.74699604698131)
+mdb.models['Model_base'].boundaryConditions['translate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', u3=0.0)
+mdb.models['Model_base'].boundaryConditions['rotate_z'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', ur1=0.0165194754249087)
+mdb.models['Model_base'].boundaryConditions['rotate_y'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', ur1=0.0)
+mdb.models['Model_base'].boundaryConditions['rotate_x'].setValuesInStep(
+    amplitude='amp_basic', stepName='Step-2', ur1=0.0)
+mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
+    description='', echoPrint=OFF, explicitPrecision=DOUBLE_PLUS_PACK, 
+    historyPrint=OFF, memory=90, memoryUnits=PERCENTAGE, model='Model_base', 
+    modelPrint=OFF, multiprocessingMode=DEFAULT, name='Job-Model_base', 
+    nodalOutputPrecision=FULL, numCpus=16, numDomains=16, 
+    parallelizationMethodExplicit=DOMAIN, queue=None, resultsFormat=ODB, 
+    scratch='', type=ANALYSIS, userSubroutine='', waitHours=0, waitMinutes=0)
+del mdb.models['Model-1']
+# Save by Administrator on 2024_03_21-03.43.39; build 2021 2020_03_06-22.50.37 167380
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Job-Model_base'].submit(consistencyChecking=OFF)
+# Save by Administrator on 2024_03_21-03.59.09; build 2021 2020_03_06-22.50.37 167380
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Model(name='springback_base', objectToCopy=mdb.models['Model_base'])
+del mdb.models['springback_base'].parts['mould']
+del mdb.models['springback_base'].parts['rotate']
+mdb.models['springback_base'].rootAssembly.deleteFeatures(('translate', 
+    'rotate-z', 'rotate-y', 'rotate-x', 'mould', 'wire-z', 'csys-z', 'wire-y', 
+    'wire-z', 'csys-y', 'wire-x', 'wire-x', 'wire-y', 'csys-x'))
+mdb.models['springback_base'].rootAssembly.deleteSets(setNames=('wire-x-Set-1', 
+    'wire-y-Set-1', 'wire-z-Set-1'))
+del mdb.models['springback_base'].rootAssembly.surfaces['clamp_left']
+del mdb.models['springback_base'].rootAssembly.sectionAssignments[2]
+del mdb.models['springback_base'].rootAssembly.sectionAssignments[1]
+del mdb.models['springback_base'].rootAssembly.sectionAssignments[0]
+del mdb.models['springback_base'].steps['Step-2']
+del mdb.models['springback_base'].steps['Step-1']
+del mdb.models['springback_base'].steps['Step-0']
+del mdb.models['springback_base'].interactions['Int-1']
+del mdb.models['springback_base'].interactionProperties['IntProp-1']
+del mdb.models['springback_base'].constraints['constraint_clamp_strip']
+del mdb.models['springback_base'].sections['ConnSect-Hinge']
+mdb.models['springback_base'].boundaryConditions.delete(('mould', 'rotate_x', 
+    'rotate_y', 'rotate_z', 'translate_fix_rotate', 'translate_x', 
+    'translate_y', 'translate_z'))
+mdb.models['springback_base'].StaticStep(initialInc=1e-07, maxNumInc=10000, 
+    minInc=1e-10, name='Step-1', nlgeom=ON, previous='Initial')
+mdb.models['springback_base'].InitialState(createStepName='Initial', 
+    endIncrement=STEP_END, endStep=LAST_STEP, fileName='Job-Model_base', 
+    instances=(mdb.models['springback_base'].rootAssembly.instances['strip'], )
+    , name='Predefined Field-1', updateReferenceConfiguration=ON)
+mdb.Job(contactPrint=OFF, description='', echoPrint=OFF, explicitPrecision=
+    SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, memory=90, 
+    memoryUnits=PERCENTAGE, model='springback_base', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Job-Model_springback', 
+    nodalOutputPrecision=FULL, numCpus=16, numDomains=16, numGPUs=0, 
+    resultsFormat=ODB, scratch='', userSubroutine='')
+mdb.jobs['Job-Model_springback'].submit(consistencyChecking=OFF)
+# Save by Administrator on 2024_03_21-03.59.42; build 2021 2020_03_06-22.50.37 167380

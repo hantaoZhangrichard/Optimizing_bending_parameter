@@ -1,0 +1,398 @@
+2600 0 3 0           
+21 Abaqus/CAE 2021 - 260 12 ACIS 29.0 NT 24 Thu Mar 21 03:43:39 2024 
+1 9.9999999999999995e-07 1e-10 
+T @77 C3E7MM7DUFXHWUEYAJPUQZK__45VPCPWRBFVFAPCUAT4MGQCQAUCJP6AQCKMRRPHYDPUJ8N4Y8FCN 
+-0 body $3 -1 -1 $-1 $4 $-1 $-1 T -0.01 9.98999999999997 -0.0099999999999991172 39.421607786220299 11.1116314487655 8.0100000000000104 #
+-1 body $5 -1 -1 $-1 $6 $-1 $-1 T -0.01 -10.01 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 #
+-2 collection $7 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-3 string_attrib-name_attrib-gen-attrib $-1 -1 $14 $-1 $0 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 40 #
+-4 lump $-1 -1 -1 $-1 $-1 $15 $0 T -0.01 9.98999999999997 -0.0099999999999991172 39.421607786220299 11.1116314487655 8.0100000000000104 #
+-5 string_attrib-name_attrib-gen-attrib $-1 -1 $16 $-1 $1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 40 #
+-6 lump $-1 -1 -1 $-1 $-1 $17 $1 T -0.01 -10.01 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 #
+-7 integer_attrib-name_attrib-gen-attrib $-1 -1 $18 $-1 $2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @23 ATTRIB_XACIS_GROUP_TYPE 5 #
+-8 collection $19 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-9 collection $20 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-10 collection $21 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-11 collection $22 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-12 collection $23 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-13 collection $24 -1 0 0 0 0 0 0 0 1 1 0 1 1 #
+-14 string_attrib-name_attrib-gen-attrib $-1 -1 $25 $3 $0 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @23 ATTRIB_XSTEP_PRODUCT_ID @16 Admi14C4E7E1nw3a #
+-15 shell $-1 -1 -1 $-1 $-1 $-1 $26 $-1 $4 T -0.01 9.98999999999997 -0.0099999999999991172 39.421607786220299 11.1116314487655 8.0100000000000104 #
+-16 string_attrib-name_attrib-gen-attrib $-1 -1 $27 $5 $1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @23 ATTRIB_XSTEP_PRODUCT_ID @16 Admi14C4E7E1nw3a #
+-17 shell $-1 -1 -1 $-1 $-1 $-1 $28 $-1 $6 T -0.01 -10.01 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 #
+-18 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $7 $2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @5 mould #
+-19 group_ptr-ct-attrib $-1 -1 $29 $-1 $8 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-20 group_ptr-ct-attrib $-1 -1 $30 $-1 $9 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-21 group_ptr-ct-attrib $-1 -1 $31 $-1 $10 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-22 group_ptr-ct-attrib $-1 -1 $32 $-1 $11 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-23 group_ptr-ct-attrib $-1 -1 $33 $-1 $12 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-24 group_ptr-ct-attrib $-1 -1 $34 $-1 $13 1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1 1 1 $2 #
+-25 string_attrib-name_attrib-gen-attrib $-1 -1 $35 $14 $0 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @16 Admi14C4E7E1nw3a #
+-26 face $36 -1 -1 $-1 $-1 $37 $15 $-1 $38 forward double out T -0.01 9.98999999999997 -0.0099999999999991172 39.421607786220299 11.1116314487655 8.0100000000000104 F #
+-27 string_attrib-name_attrib-gen-attrib $-1 -1 $39 $16 $1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @16 Admi14C4E7E1nw3a #
+-28 face $40 -1 -1 $-1 $-1 $41 $17 $-1 $42 forward double out T -0.01 -10.01 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 F #
+-29 integer_attrib-name_attrib-gen-attrib $-1 -1 $43 $19 $8 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-30 integer_attrib-name_attrib-gen-attrib $-1 -1 $44 $20 $9 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-31 integer_attrib-name_attrib-gen-attrib $-1 -1 $45 $21 $10 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-32 integer_attrib-name_attrib-gen-attrib $-1 -1 $46 $22 $11 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-33 integer_attrib-name_attrib-gen-attrib $-1 -1 $47 $23 $12 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-34 integer_attrib-name_attrib-gen-attrib $-1 -1 $48 $24 $13 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @19 SPAATTRIB_VALUETYPE 1 #
+-35 string_attrib-name_attrib-gen-attrib $-1 -1 $49 $25 $0 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @23 ATTRIB_XACIS_LAYER_NAME @7 Layer 1 #
+-36 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $26 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 42 #
+-37 loop $50 -1 -1 $-1 $-1 $51 $26 T -0.01 9.98999999999997 -0.0099999999999991172 39.421607786220299 11.1116314487655 8.0100000000000104 periphery $38 F #
+-38 spline-surface $-1 -1 -1 $-1 forward { exactsur 0 full nubs 1 3 open open none none 2 2 
+	0 1 1 1 
+	0 3 1 3 
+	1.32348898008484e-22 9.9999999999999698 8 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	13.1498015978793 10.000007758495 8.0000000000000107 
+	13.149801597681099 10.0000077584914 8.8548130686529011e-16 
+	26.294449556749701 10.3561168906057 7.9999999999999902 
+	26.294449556511498 10.356116890597001 8.8242336391905095e-16 
+	39.411607786220301 11.101631448765501 8 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	0 
+	0 
+	0 
+	0 
+	0 
+	0 
+	0 
+	F 1 F 0 F 1 F 0 } I I I I #
+-39 string_attrib-name_attrib-gen-attrib $-1 -1 $52 $27 $1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @23 ATTRIB_XACIS_LAYER_NAME @7 Layer 1 #
+-40 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $28 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 43 #
+-41 loop $53 -1 -1 $-1 $-1 $54 $28 T -0.01 -10.01 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 periphery $42 F #
+-42 spline-surface $-1 -1 -1 $-1 forward { exactsur 1 full nubs 1 3 open open none none 2 2 
+	0 1 1 1 
+	0 3 1 3 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	7.1468404924581601e-22 -10 -1.9552290179404202e-14 
+	13.149801597681099 10.0000077584914 8.8548130686529011e-16 
+	13.5108694031418 -9.9999920890729097 -1.9537228120568e-14 
+	26.294449556511498 10.356116890597001 8.8242336391905095e-16 
+	27.0338228219928 -9.6341367147437893 -1.95341701776216e-14 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	40.546473029857303 -8.8661446136502793 -1.95522904810449e-14 
+	0 
+	0 
+	0 
+	0 
+	0 
+	0 
+	0 
+	F 1 F 0 F 1 F 0 } I I I I #
+-43 string_attrib-name_attrib-gen-attrib $-1 -1 $55 $29 $8 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @1   #
+-44 string_attrib-name_attrib-gen-attrib $-1 -1 $56 $30 $9 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @1   #
+-45 string_attrib-name_attrib-gen-attrib $-1 -1 $57 $31 $10 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @9 NOT_KNOWN #
+-46 string_attrib-name_attrib-gen-attrib $-1 -1 $58 $32 $11 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @16 Admi14C4E7E1nw3a #
+-47 string_attrib-name_attrib-gen-attrib $-1 -1 $59 $33 $12 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @16 Admi14C4E7E1nw3a #
+-48 string_attrib-name_attrib-gen-attrib $-1 -1 $60 $34 $13 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 SPAATTRIB_VALUE @1   #
+-49 integer_attrib-name_attrib-gen-attrib $-1 -1 $61 $35 $0 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @18 ATTRIB_XACIS_LAYER 1 #
+-50 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $37 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 -1 #
+-51 coedge $-1 -1 -1 $-1 $62 $63 $-1 $64 forward $37 $65 #
+-52 integer_attrib-name_attrib-gen-attrib $-1 -1 $66 $39 $1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @18 ATTRIB_XACIS_LAYER 1 #
+-53 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $41 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 -1 #
+-54 coedge $-1 -1 -1 $-1 $67 $68 $-1 $69 forward $41 $70 #
+-55 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $43 $8 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @10 Definition #
+-56 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $44 $9 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @8 Revision #
+-57 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $45 $10 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @6 Source #
+-58 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $46 $11 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @11 Part Number #
+-59 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $47 $12 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @12 Nomenclature #
+-60 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $48 $13 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @17 ATTRIB_XACIS_NAME @11 Description #
+-61 rgb_color-st-attrib $-1 -1 $-1 $49 $0 2 1 2 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 #
+-62 coedge $-1 -1 -1 $-1 $71 $51 $-1 $72 forward $37 $73 #
+-63 coedge $-1 -1 -1 $-1 $51 $71 $-1 $74 forward $37 $75 #
+-64 edge $76 -1 -1 $-1 $77 0 $78 1 $51 $79 forward @7 unknown T -0.01 9.98999999999997 -0.0099999999999990999 0.01 10.01 8.0099999999999998 #
+-65 pcurve $-1 -1 -1 $-1 0 forward { exppc 2 nubs 1 open 2 
+	0 1 1 1 
+	0 0 
+	1 0 
+	0.001 
+	-1 
+	spline forward { ref 0 } I I I I 
+	} 0 0 #
+-66 rgb_color-st-attrib $-1 -1 $-1 $52 $1 2 1 2 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 #
+-67 coedge $-1 -1 -1 $-1 $80 $54 $-1 $81 forward $41 $82 #
+-68 coedge $-1 -1 -1 $-1 $54 $80 $-1 $83 forward $41 $84 #
+-69 edge $85 -1 -1 $-1 $86 0 $87 1 $54 $88 forward @7 unknown T -0.01 -10.01 -0.010000000000019552 0.01 10.01 0.010000000000000901 #
+-70 pcurve $-1 -1 -1 $-1 0 forward { exppc 3 nubs 1 open 2 
+	0 1 1 1 
+	0 0 
+	1 0 
+	0.001 
+	-1 
+	spline forward { ref 1 } I I I I 
+	} 0 0 #
+-71 coedge $-1 -1 -1 $-1 $63 $62 $-1 $89 forward $37 $90 #
+-72 edge $91 -1 -1 $-1 $78 0 $92 1 $62 $93 forward @7 unknown T -0.01 9.9900000000000002 -0.0099999999999991172 39.421607786220299 11.1116314487655 0.010000000000000901 #
+-73 pcurve $-1 -1 -1 $-1 0 forward { exppc 4 nubs 1 open 2 
+	0 1 1 1 
+	1 0 
+	1 1 
+	0.001 
+	-1 
+	spline forward { ref 0 } I I I I 
+	} 0 0 #
+-74 edge $94 -1 -1 $-1 $95 0 $77 1 $63 $96 forward @7 unknown T -0.01 9.98999999999997 7.9899999999999904 39.421607786220299 11.1116314487655 8.0100000000000104 #
+-75 pcurve $-1 -1 -1 $-1 0 forward { exppc 5 nubs 1 open 2 
+	0 1 1 1 
+	0 1 
+	0 0 
+	0.001 
+	-1 
+	spline forward { ref 0 } I I I I 
+	} 0 0 #
+-76 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $64 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 64 #
+-77 vertex $-1 -1 -1 $-1 $74 $97 #
+-78 vertex $-1 -1 -1 $-1 $64 $98 #
+-79 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 6 full nubs 1 open 2 
+	0 1 1 1 
+	1.32348898008484e-22 9.9999999999999698 8 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	0.01 
+	spline forward { ref 0 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	0 0 
+	1 0 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-80 coedge $-1 -1 -1 $-1 $68 $67 $-1 $99 forward $41 $100 #
+-81 edge $101 -1 -1 $-1 $87 0 $102 1 $67 $103 forward @7 unknown T -0.01 -10.01 -0.010000000000019552 40.556473029857301 -8.8561446136502795 0.0099999999999804655 #
+-82 pcurve $-1 -1 -1 $-1 0 forward { exppc 7 nubs 1 open 2 
+	0 1 1 1 
+	1 0 
+	1 1 
+	0.001 
+	-1 
+	spline forward { ref 1 } I I I I 
+	} 0 0 #
+-83 edge $104 -1 -1 $-1 $105 -1 $86 -0 $68 $106 forward @7 unknown T -0.01 9.9900000000000002 -0.0099999999999991172 39.421607786220299 11.1116314487655 0.010000000000000901 #
+-84 pcurve $-1 -1 -1 $-1 0 forward { exppc 8 nubs 1 open 2 
+	-1 1 0 1 
+	0 1 
+	0 0 
+	0.001 
+	-1 
+	spline forward { ref 1 } I I I I 
+	} 0 0 #
+-85 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $69 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 68 #
+-86 vertex $-1 -1 -1 $-1 $83 $107 #
+-87 vertex $-1 -1 -1 $-1 $69 $108 #
+-88 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 9 full nubs 1 open 2 
+	0 1 1 1 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	7.1468404924581601e-22 -10 -1.9552290179404202e-14 
+	0.01 
+	spline forward { ref 1 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	0 0 
+	1 0 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-89 edge $109 -1 -1 $-1 $92 0 $95 1 $71 $110 forward @7 unknown T 39.401607786220303 11.091631448765501 -0.0099999999999990999 39.421607786220299 11.1116314487655 8.0099999999999998 #
+-90 pcurve $-1 -1 -1 $-1 0 forward { exppc 10 nubs 1 open 2 
+	0 1 1 1 
+	1 1 
+	0 1 
+	0.001 
+	-1 
+	spline forward { ref 0 } I I I I 
+	} 0 0 #
+-91 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $72 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 65 #
+-92 vertex $-1 -1 -1 $-1 $72 $111 #
+-93 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 11 full nubs 3 open 2 
+	0 3 1 3 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	13.149801597681099 10.0000077584914 8.8548130686529011e-16 
+	26.294449556511498 10.356116890597001 8.8242336391905095e-16 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	0.01 
+	spline forward { ref 0 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	1 0 
+	1 1 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-94 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $74 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 67 #
+-95 vertex $-1 -1 -1 $-1 $89 $112 #
+-96 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 12 full nubs 3 open 2 
+	0 3 1 3 
+	39.411607786220301 11.101631448765501 8 
+	26.294449556749701 10.3561168906057 7.9999999999999902 
+	13.1498015978793 10.000007758495 8.0000000000000107 
+	1.32348898008484e-22 9.9999999999999698 8 
+	0.01 
+	spline forward { ref 0 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	0 1 
+	0 0 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-97 point $-1 -1 -1 $-1 1.32348898008484e-22 9.9999999999999698 8 #
+-98 point $-1 -1 -1 $-1 -7.1468404924581601e-22 10 9.0054336570156893e-16 #
+-99 edge $113 -1 -1 $-1 $102 0 $105 1 $80 $114 forward @7 unknown T 39.401607786220303 -8.8761446136502791 -0.010000000000019552 40.556473029857301 11.1116314487655 0.010000000000000901 #
+-100 pcurve $-1 -1 -1 $-1 0 forward { exppc 13 nubs 1 open 2 
+	0 1 1 1 
+	1 1 
+	0 1 
+	0.001 
+	-1 
+	spline forward { ref 1 } I I I I 
+	} 0 0 #
+-101 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $81 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 69 #
+-102 vertex $-1 -1 -1 $-1 $81 $115 #
+-103 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 14 full nubs 3 open 2 
+	0 3 1 3 
+	7.1468404924581601e-22 -10 -1.9552290179404202e-14 
+	13.5108694031418 -9.9999920890729097 -1.9537228120568e-14 
+	27.0338228219928 -9.6341367147437893 -1.95341701776216e-14 
+	40.546473029857303 -8.8661446136502793 -1.95522904810449e-14 
+	0.01 
+	spline forward { ref 1 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	1 0 
+	1 1 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-104 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $83 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 65 #
+-105 vertex $-1 -1 -1 $-1 $99 $116 #
+-106 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 15 full nubs 3 open 2 
+	-1 3 -0 3 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	26.294449556511498 10.356116890597001 8.8242336391905095e-16 
+	13.149801597681099 10.0000077584914 8.8548130686529011e-16 
+	-7.1468404924581601e-22 10 9.0054336570156893e-16 
+	0.01 
+	spline forward { ref 1 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	-1 1 0 1 
+	0 1 
+	0 0 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-107 point $-1 -1 -1 $-1 -7.1468404924581601e-22 10 9.0054336570156893e-16 #
+-108 point $-1 -1 -1 $-1 7.1468404924581601e-22 -10 -1.9552290179404202e-14 #
+-109 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $89 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 66 #
+-110 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 16 full nubs 1 open 2 
+	0 1 1 1 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	39.411607786220301 11.101631448765501 8 
+	0.01 
+	spline forward { ref 0 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	1 1 
+	0 1 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-111 point $-1 -1 -1 $-1 39.411607786220301 11.101631448765501 9.0054366734225796e-16 #
+-112 point $-1 -1 -1 $-1 39.411607786220301 11.101631448765501 8 #
+-113 string_attrib-name_attrib-gen-attrib $-1 -1 $-1 $-1 $99 2 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 @15 ATTRIB_XACIS_ID @2 70 #
+-114 intcurve-curve $-1 -1 -1 $-1 forward { surfcur 17 full nubs 1 open 2 
+	0 1 1 1 
+	40.546473029857303 -8.8661446136502793 -1.95522904810449e-14 
+	39.411607786220301 11.101631448765501 9.0054366734225796e-16 
+	0.01 
+	spline forward { ref 1 } I I I I 
+	null_surface 
+	nubs 1 open 2 
+	0 1 1 1 
+	1 1 
+	0 1 
+	
+	nullbs 
+	-1 
+	-1 
+	I I 
+	0 
+	0 
+	0 
+	
+	-1 
+	none F surf1 
+	F } I I #
+-115 point $-1 -1 -1 $-1 40.546473029857303 -8.8661446136502793 -1.95522904810449e-14 #
+-116 point $-1 -1 -1 $-1 39.411607786220301 11.101631448765501 9.0054366734225796e-16 #
+End-of-ACIS-data 

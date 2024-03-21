@@ -1,0 +1,22 @@
+Analysis initiated from SIMULIA established products
+Abaqus JOB Job-Model_base
+Abaqus 2021
+Abaqus License Manager checked out the following licenses:
+Abaqus/Explicit checked out 16 tokens from Flexnet server localhost.
+<9983 out of 9999 licenses remain available>.
+Begin Analysis Input File Processor
+2024/3/21 3:43:42
+Run pre.exe
+2024/3/21 3:43:46
+End Analysis Input File Processor
+Begin Abaqus/Explicit Packager
+2024/3/21 3:43:46
+Run package_dp.exe
+2024/3/21 3:43:56
+End Abaqus/Explicit Packager
+Begin Abaqus/Explicit Analysis
+2024/3/21 3:43:56
+Run explicit_dp.exe
+2024/3/21 3:59:08
+End Abaqus/Explicit Analysis
+Abaqus JOB Job-Model_base COMPLETED

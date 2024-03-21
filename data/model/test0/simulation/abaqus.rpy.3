@@ -1,0 +1,46 @@
+# -*- coding: mbcs -*-
+#
+# Abaqus/Viewer Release 2021 replay file
+# Internal Version: 2020_03_06-22.50.37 167380
+# Run by Administrator on Thu Mar 21 23:57:51 2024
+#
+
+# from driverUtils import executeOnCaeGraphicsStartup
+# executeOnCaeGraphicsStartup()
+#: Executing "onCaeGraphicsStartup()" in the site directory ...
+from abaqus import *
+from abaqusConstants import *
+session.Viewport(name='Viewport: 1', origin=(0.0, 0.0), width=207.435180664063, 
+    height=161.949157714844)
+session.viewports['Viewport: 1'].makeCurrent()
+session.viewports['Viewport: 1'].maximize()
+from viewerModules import *
+from driverUtils import executeOnCaeStartup
+executeOnCaeStartup()
+o2 = session.openOdb(name='Job-Model_base.odb')
+#: Model: C:/Optimizing_bending_parameter/data/model/test0/simulation/Job-Model_base.odb
+#: Number of Assemblies:         1
+#: Number of Assembly instances: 0
+#: Number of Part instances:     6
+#: Number of Meshes:             7
+#: Number of Element Sets:       18
+#: Number of Node Sets:          11
+#: Number of Steps:              3
+session.viewports['Viewport: 1'].setValues(displayedObject=o2)
+session.viewports['Viewport: 1'].makeCurrent()
+session.viewports['Viewport: 1'].odbDisplay.setFrame(step='Step-0')
+session.viewports['Viewport: 1'].odbDisplay.setFrame(step='Step-1')
+session.viewports['Viewport: 1'].odbDisplay.display.setValues(plotState=(
+    CONTOURS_ON_DEF, ))
+session.viewports['Viewport: 1'].view.setValues(nearPlane=648.37, 
+    farPlane=976.903, width=229.752, height=150.129, viewOffsetX=-66.3582, 
+    viewOffsetY=52.15)
+session.viewports['Viewport: 1'].view.setValues(nearPlane=668.161, 
+    farPlane=957.112, width=130.041, height=84.9743, viewOffsetX=-68.3838, 
+    viewOffsetY=53.7419)
+session.viewports['Viewport: 1'].view.setValues(nearPlane=667.524, 
+    farPlane=957.75, width=129.917, height=84.8932, viewOffsetX=-82.9589, 
+    viewOffsetY=62.8821)
+session.viewports['Viewport: 1'].odbDisplay.setFrame(step='Step-0')
+session.viewports['Viewport: 1'].odbDisplay.setFrame(step='Step-1')
+session.viewports['Viewport: 1'].odbDisplay.setFrame(step='Step-2')

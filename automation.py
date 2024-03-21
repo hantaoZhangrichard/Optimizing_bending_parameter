@@ -15,7 +15,7 @@ def run_cmd(cmd):
 if __name__ == "__main__":
     dir1 = ".\data\model\\"
     dir2 = ".\data\mould_output\\"
-    for i in range(14,61):
+    for i in range(0,1):
         mould_name = "test" + str(i)
         print(mould_name)
         if not os.path.exists(dir1 + mould_name):

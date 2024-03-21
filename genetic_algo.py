@@ -2,7 +2,7 @@ import numpy as np
 from rl_env import bending_env
 
 # Genetic Algorithm Parameters
-population_size = 10
+population_size = 1
 mutation_rate = 0.1
 num_step = 4
 
@@ -37,55 +37,40 @@ def mutate(individual, mutation_rate):
             mutated_individual[i] += noise
     return mutated_individual
 
-# Main Genetic Algorithm Loop
-def genetic_algorithm(target_string, population_size, mutation_rate):
-    population = initialize_population(population_size, target_string)
-    generation = 1
-
-    while True:
-        # Calculate fitness of each individual
-        fitness_scores = [calculate_fitness(individual, target_string) for individual in population]
-
-        # Check for solution
-        max_fitness = max(fitness_scores)
-        best_individual = population[fitness_scores.index(max_fitness)]
-        if max_fitness == len(target_string):
-            return best_individual, generation
-
-        # Print progress
-        if generation % 10 == 0:
-            print(f"Generation {generation}: Best fit: {max_fitness}/{len(target_string)}")
-
-        # Select parents and perform crossover
-        new_population = []
-        for _ in range(population_size // 2):
-            parent1, parent2 = select_parents(population, target_string)
-            child1, child2 = crossover(parent1, parent2)
-            new_population.extend([child1, child2])
-
-        # Apply mutation
-        population = [mutate(individual, mutation_rate) for individual in new_population]
-
-        generation += 1
-
-# Run the genetic algorithm
-'''best_individual, generations = genetic_algorithm(TARGET_STRING, POPULATION_SIZE, MUTATION_RATE)
-print(f"Solution found in {generations} generations: {best_individual}")'''
-
 if __name__ == "__main__":
     population = initialize_population(population_size, num_step)
-    fitness = 
-    parents = select_parents(population, fitness)
-    print(parents)
-    parent1 = parents[0]
-    parent2 = parents[1]
-    child1, child2 = crossover(parent1, parent2)
-    print(mutate(child1, mutation_rate))
-    num_generation = 5
+    env = bending_env()
+    
+    num_generation = 1
+    best_fitness = np.empty((num_generation, ))
     for i in range(num_generation):
-        fitness = []
-        for j in range(population_size):
-            env = bending_env(str(i), episode=str(j))
+        print("Generation:{}".format(i))
+        fitness = np.empty((population_size, ))
+        new_population = []
+        for j in range(population_size // 2):
+            env.reset()
             individual = population[j]
-            fitness = 
+            for k in range(len(individual)):
+                action = individual[k]
+                _, reward, done = env.step(action)
+                if done:
+                    break
+            fitness[j] = reward
+            parents = select_parents(population, fitness)
+            # print(parents)
+            parent1 = parents[0]
+            parent2 = parents[1]
+            child1, child2 = crossover(parent1, parent2)
+            child1 = mutate(child1, mutation_rate)
+            child2 = mutate(child2, mutation_rate)
+            # print(mutate(child1, mutation_rate))
+            new_population.extend([child1, child2])
+        
+        best_fitness[i] = max(fitness)
+        print("Best fitness score in this generation:{}".format(max(fitness)))
+        best_individual = population[fitness.index(max(fitness))]
+        print("Best individual in this generation:{}".format(best_individual))
+        population = new_population
+    
+    print(best_fitness)
 

@@ -1,0 +1,429 @@
+
+The double precision Abaqus/Package executable will be used in this analysis.
+
+Abaqus/Explicit 2021                             DATE 21-3月-2024  TIME 03:43:50
+-------------------------------------------------------------------------------
+ PREPROCESSOR WARNING MESSAGES
+-------------------------------------------------------------------------------
+
+
+***WARNING: There are 4 warning messages in the data (.dat) file.  Please
+            check the data file for possible errors in the input file.
+
+
+
+***NOTE: The internal numbering of the nodes and elements is cache friendly.
+
+-------------------------------------------------------------------------------
+           DOMAIN DECOMPOSITION INFORMATION
+-------------------------------------------------------------------------------
+
+
+     DOMAIN 1 HAS 229 ELEMENTS AND 346 NODES with WEIGHT 6.2294
+
+     DOMAIN 2 HAS 83 ELEMENTS AND 199 NODES with WEIGHT 6.2248
+
+     DOMAIN 3 HAS 115 ELEMENTS AND 209 NODES with WEIGHT 6.2949
+
+     DOMAIN 4 HAS 122 ELEMENTS AND 215 NODES with WEIGHT 6.2393
+
+     DOMAIN 5 HAS 229 ELEMENTS AND 337 NODES with WEIGHT 6.2439
+
+     DOMAIN 6 HAS 78 ELEMENTS AND 196 NODES with WEIGHT 6.2385
+
+     DOMAIN 7 HAS 116 ELEMENTS AND 207 NODES with WEIGHT 6.2583
+
+     DOMAIN 8 HAS 124 ELEMENTS AND 220 NODES with WEIGHT 6.2606
+
+     DOMAIN 9 HAS 231 ELEMENTS AND 342 NODES with WEIGHT 6.2606
+
+     DOMAIN 10 HAS 74 ELEMENTS AND 191 NODES with WEIGHT 6.2698
+
+     DOMAIN 11 HAS 120 ELEMENTS AND 211 NODES with WEIGHT 6.2271
+
+     DOMAIN 12 HAS 120 ELEMENTS AND 211 NODES with WEIGHT 6.2180
+
+     DOMAIN 13 HAS 119 ELEMENTS AND 213 NODES with WEIGHT 6.2918
+
+     DOMAIN 14 HAS 91 ELEMENTS AND 181 NODES with WEIGHT 6.2294
+
+     DOMAIN 15 HAS 63 ELEMENTS AND 138 NODES with WEIGHT 6.2362
+
+     DOMAIN 16 HAS 157 ELEMENTS AND 161 NODES with WEIGHT 6.2774
+
+
+-------------------------------------------------------------------------------
+ MODEL INFORMATION (IN GLOBAL X-Y COORDINATES)
+-------------------------------------------------------------------------------
+
+   Total mass (unscaled) in model = 1.44000E-07
+   Center of mass of model (based on unscaled mass) = ( 8.181250E+01, 3.712709E-16, 7.500024E-02)
+
+    Moments of Inertia :
+                 About Center of Mass              About Origin
+      I(XX)          1.452810E-06                  1.453620E-06
+      I(YY)          1.961688E-03                  2.925522E-03
+      I(ZZ)          1.961839E-03                  2.925672E-03
+      I(XY)          3.831312E-21                 -5.426305E-22
+      I(YZ)         -2.131593E-15                 -2.131593E-15
+      I(ZX)          6.135766E-07                 -2.700013E-07
+
+-------------------------------------------------------------------------------
+ STABLE TIME INCREMENT INFORMATION
+-------------------------------------------------------------------------------
+
+
+  The stable time increment estimate for each element is based on
+  linearization about the initial state. The stable time increment estimates
+  do not account for mass scaling.
+
+
+   Initial time increment = 1.37189E-08
+
+   Statistics for all elements:
+      Mean = 1.37189E-08
+      Standard deviation = 5.05640E-16
+
+   Most critical elements:
+    Element number   Rank    Time increment   Increment ratio
+    (Instance name)
+   ----------------------------------------------------------
+           1          1       1.371891E-08      1.000000E+00
+    STRIP
+           6          2       1.371891E-08      1.000000E+00
+    STRIP
+         138          3       1.371891E-08      1.000000E+00
+    STRIP
+         108          4       1.371891E-08      1.000000E+00
+    STRIP
+          96          5       1.371891E-08      1.000000E+00
+    STRIP
+          66          6       1.371891E-08      1.000000E+00
+    STRIP
+          30          7       1.371891E-08      1.000000E+00
+    STRIP
+         276          8       1.371891E-08      1.000000E+00
+    STRIP
+         271          9       1.371891E-08      1.000000E+00
+    STRIP
+         216         10       1.371891E-08      1.000000E+00
+    STRIP
+
+
+  Instance name for the most critical element will be printed if the critical
+  element changes or at the beginning of a new page.
+
+
+-------------------------------------------------------------------------------
+
+  INFORMATION REGARDING INITIAL CONTACT OVERCLOSURES FOR NEWLY DEFINED GENERAL
+  CONTACT INTERACTIONS IN STEP 1
+
+-------------------------------------------------------------------------------
+
+  No initial node-face or edge-edge overclosures found.
+
+
+  No nodal position adjustments have been made.
+
+
+  No unresolved initial node-face or edge-edge overclosures found.
+
+
+***WARNING: 145 surface intersections have been detected after the completion
+            of the initial overclosure procedure (145 were detected in the
+            original model).  It may be neccessary to manually adjust the
+            configuration of the intersecting surfaces (e.g. via the *CONTACT
+            CLEARANCE ASSIGNMENT option). The elements involved in these
+            intersections have been added to the elset
+            WarnElemSurfaceIntersect. Check the message file for more detailed
+            information.
+
+
+Abaqus/Explicit 2021                             DATE 21-3月-2024  TIME 03:44:00
+
+The double precision Abaqus/Explicit executable will be used in this analysis.
+
+The model has been decomposed into 16 domains.
+Domain level parallelization will be used with 16 processors.
+
+-------------------------------------------------------------------------------
+ SOLUTION PROGRESS
+-------------------------------------------------------------------------------
+
+ STEP 1  ORIGIN 0.0000
+
+  Total memory used for step 1 is approximately 26.6 megabytes.
+  Global time estimation algorithm will be used.
+  Scaling factor:  1.0000
+  Variable mass scaling factor at zero increment: 1.0000
+              STEP     TOTAL      WALL      STABLE    CRITICAL    KINETIC      TOTAL    PERCENT
+INCREMENT     TIME      TIME      TIME   INCREMENT     ELEMENT     ENERGY     ENERGY  CHNG MASS
+        0  0.000E+00 0.000E+00  00:00:00 1.940E-07           1  0.000E+00  0.000E+00  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      0 of     20 requested intervals at increment zero.
+    27001  5.000E-03 5.000E-03  00:00:15 1.850E-07           1  3.302E-08 -1.564E-07  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      1 of     20 requested intervals at  5.000170E-03
+    54030  1.000E-02 1.000E-02  00:00:31 1.850E-07           1  4.256E-07 -1.208E-06  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      2 of     20 requested intervals at  1.000013E-02
+    81059  1.500E-02 1.500E-02  00:00:46 1.850E-07           1  1.714E-06 -9.192E-07  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      3 of     20 requested intervals at  1.500001E-02
+   108090  2.000E-02 2.000E-02  00:01:01 1.850E-07           1  4.251E-06 -7.046E-07  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      4 of     20 requested intervals at  2.000013E-02
+   135121  2.500E-02 2.500E-02  00:01:16 1.850E-07         421  8.017E-06  2.684E-07  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      5 of     20 requested intervals at  2.500002E-02
+   162155  3.000E-02 3.000E-02  00:01:31 1.850E-07         421  1.261E-05 -1.912E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      6 of     20 requested intervals at  3.000017E-02
+   189190  3.500E-02 3.500E-02  00:01:46 1.849E-07         421  1.738E-05  2.607E-06  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      7 of     20 requested intervals at  3.500013E-02
+   216227  4.000E-02 4.000E-02  00:02:01 1.849E-07         421  2.152E-05 -1.843E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      8 of     20 requested intervals at  4.000001E-02
+   243268  4.500E-02 4.500E-02  00:02:16 1.849E-07         421  2.434E-05 -1.738E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      9 of     20 requested intervals at  4.500015E-02
+   270311  5.000E-02 5.000E-02  00:02:31 1.849E-07         421  2.534E-05 -5.496E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     10 of     20 requested intervals at  5.000013E-02
+   297357  5.500E-02 5.500E-02  00:02:45 1.849E-07         421  2.434E-05 -6.086E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     11 of     20 requested intervals at  5.500013E-02
+   324406  6.000E-02 6.000E-02  00:03:00 1.848E-07         421  2.152E-05 -8.858E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     12 of     20 requested intervals at  6.000017E-02
+   351457  6.500E-02 6.500E-02  00:03:15 1.848E-07         421  1.738E-05 -4.960E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     13 of     20 requested intervals at  6.500008E-02
+   378511  7.000E-02 7.000E-02  00:03:30 1.848E-07         421  1.261E-05 -5.174E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     14 of     20 requested intervals at  7.000011E-02
+   405567  7.500E-02 7.500E-02  00:03:45 1.848E-07         421  8.017E-06 -6.894E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     15 of     20 requested intervals at  7.500013E-02
+   432624  8.000E-02 8.000E-02  00:04:00 1.848E-07         421  4.251E-06 -5.948E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     16 of     20 requested intervals at  8.000004E-02
+   459683  8.500E-02 8.500E-02  00:04:15 1.848E-07         421  1.714E-06 -6.344E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     17 of     20 requested intervals at  8.500010E-02
+   486742  9.000E-02 9.000E-02  00:04:30 1.848E-07         421  4.256E-07 -4.893E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     18 of     20 requested intervals at  9.000001E-02
+   513802  9.500E-02 9.500E-02  00:04:45 1.848E-07         421  3.302E-08 -4.116E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     19 of     20 requested intervals at  9.500004E-02
+   540862  1.000E-01 1.000E-01  00:05:00 1.848E-07         421  3.172E-16 -3.848E-05  1.990E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Restart Number  1 at 0.10000
+Output Field Frame Number     20 of     20 requested intervals at  1.000000E-01
+
+***WARNING: Jumps in displacement boundary conditions have been detected at
+            the beginning of step 2.  The maximum jump is 0.10000 at node 9 of
+            instance TRANSLATE.  The node set "WarnNodeDispBCJump" has been
+            written to the database file.  Check the .msg file for more
+            detailed information.
+
+
+***NOTE: Displacement boundary conditions with prescribed jumps will be
+         enforced as defined, minus the value of the jump. The jumps might be
+         caused by:
+            1) A discontinuous *BOUNDARY, TYPE=DISPLACEMENT definition.
+            2) Initial contact adjustments at the beginning of the first
+               step.
+            3) Locating the rigid body reference node with the POSITION=CENTER
+               OF MASS parameter.
+            4) Use of an amplitude curve to prescribe the boundary conditions
+               in an analysis with a large number of increments; precision
+               error may cause a small drift from the prescribed displacement.
+
+
+Abaqus/Explicit 2021                             DATE 21-3月-2024  TIME 03:49:00
+
+ STEP 2  ORIGIN 0.10000
+
+  Total memory used for step 2 is approximately 32.3 megabytes.
+  Global time estimation algorithm will be used.
+  Scaling factor:  1.0000
+  Variable mass scaling factor at zero increment: 1.0000
+              STEP     TOTAL      WALL      STABLE    CRITICAL    KINETIC      TOTAL
+INCREMENT     TIME      TIME      TIME   INCREMENT     ELEMENT     ENERGY     ENERGY
+        0  0.000E+00 1.000E-01  00:05:00 1.848E-07         421  3.172E-16 -3.848E-05
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      0 of     20 requested intervals at increment zero.
+    27060  5.000E-03 1.050E-01  00:05:15 1.848E-07         426  1.537E-04 -4.143E+00
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      1 of     20 requested intervals at  1.050000E-01
+    54120  1.000E-02 1.100E-01  00:05:30 1.848E-07         426  1.981E-03 -2.263E+02
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      2 of     20 requested intervals at  1.100000E-01
+    81180  1.500E-02 1.150E-01  00:05:45 1.848E-07         426  7.978E-03 -2.187E+03
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      3 of     20 requested intervals at  1.150001E-01
+   108239  2.000E-02 1.200E-01  00:06:00 1.848E-07         426  1.978E-02 -1.036E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      4 of     20 requested intervals at  1.200001E-01
+   135298  2.500E-02 1.250E-01  00:06:15 1.848E-07         426  3.731E-02 -3.309E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      5 of     20 requested intervals at  1.250001E-01
+   162356  3.000E-02 1.300E-01  00:06:29 1.848E-07         426  5.870E-02 -8.214E+04
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      6 of     20 requested intervals at  1.300001E-01
+   189414  3.500E-02 1.350E-01  00:06:44 1.848E-07         426  8.085E-02 -1.708E+05
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      7 of     20 requested intervals at  1.350000E-01
+   216474  4.000E-02 1.400E-01  00:06:59 1.848E-07         426  1.001E-01 -3.112E+05
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      8 of     20 requested intervals at  1.400002E-01
+   243535  4.500E-02 1.450E-01  00:07:14 1.848E-07         426  1.133E-01 -5.113E+05
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      9 of     20 requested intervals at  1.450002E-01
+   270600  5.000E-02 1.500E-01  00:07:29 1.847E-07         426  1.180E-01 -7.721E+05
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     10 of     20 requested intervals at  1.500001E-01
+   297672  5.500E-02 1.550E-01  00:07:44 1.847E-07         426  1.134E-01 -1.086E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     11 of     20 requested intervals at  1.550000E-01
+   324752  6.000E-02 1.600E-01  00:07:59 1.846E-07         426  1.003E-01 -1.439E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     12 of     20 requested intervals at  1.600001E-01
+   351842  6.500E-02 1.650E-01  00:08:14 1.845E-07         846  8.113E-02 -1.807E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     13 of     20 requested intervals at  1.650001E-01
+   378945  7.000E-02 1.700E-01  00:08:29 1.844E-07         846  5.889E-02 -2.163E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     14 of     20 requested intervals at  1.700001E-01
+   406059  7.500E-02 1.750E-01  00:08:45 1.844E-07         846  3.736E-02 -2.482E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     15 of     20 requested intervals at  1.750001E-01
+   433177  8.000E-02 1.800E-01  00:09:00 1.844E-07         408  1.982E-02 -2.741E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     16 of     20 requested intervals at  1.800001E-01
+   460297  8.500E-02 1.850E-01  00:09:15 1.844E-07         396  7.993E-03 -2.926E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     17 of     20 requested intervals at  1.850001E-01
+   487418  9.000E-02 1.900E-01  00:09:31 1.844E-07         396  1.985E-03 -3.036E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     18 of     20 requested intervals at  1.900001E-01
+   514539  9.500E-02 1.950E-01  00:09:46 1.844E-07          24  1.540E-04 -3.081E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     19 of     20 requested intervals at  1.950001E-01
+   541660  1.000E-01 2.000E-01  00:10:01 1.844E-07          24  7.713E-11 -3.088E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Restart Number  1 at 0.20000
+Output Field Frame Number     20 of     20 requested intervals at  2.000000E-01
+
+***WARNING: Jumps in displacement boundary conditions have been detected at
+            the beginning of step 3.  The maximum jump is 11.985 at node 9 of
+            instance TRANSLATE.  The node set "WarnNodeDispBCJump" has been
+            written to the database file.  Check the .msg file for more
+            detailed information.
+
+
+***NOTE: Displacement boundary conditions with prescribed jumps will be
+         enforced as defined, minus the value of the jump. The jumps might be
+         caused by:
+            1) A discontinuous *BOUNDARY, TYPE=DISPLACEMENT definition.
+            2) Initial contact adjustments at the beginning of the first
+               step.
+            3) Locating the rigid body reference node with the POSITION=CENTER
+               OF MASS parameter.
+            4) Use of an amplitude curve to prescribe the boundary conditions
+               in an analysis with a large number of increments; precision
+               error may cause a small drift from the prescribed displacement.
+
+
+***WARNING: Jumps in displacement-type connector motion definitions have been
+            detected at the beginning of step 3. Check the .msg file for more
+            detailed information.
+
+
+Abaqus/Explicit 2021                             DATE 21-3月-2024  TIME 03:54:02
+
+ STEP 3  ORIGIN 0.20000
+
+  Total memory used for step 3 is approximately 32.5 megabytes.
+  Global time estimation algorithm will be used.
+  Scaling factor:  1.0000
+  Variable mass scaling factor at zero increment: 1.0000
+              STEP     TOTAL      WALL      STABLE    CRITICAL    KINETIC      TOTAL
+INCREMENT     TIME      TIME      TIME   INCREMENT     ELEMENT     ENERGY     ENERGY
+        0  0.000E+00 2.000E-01  00:10:02 1.844E-07          24  1.558E-10 -3.088E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      0 of     20 requested intervals at increment zero.
+    27122  5.000E-03 2.050E-01  00:10:17 1.844E-07          24  2.368E-05 -3.091E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      1 of     20 requested intervals at  2.050001E-01
+    54243  1.000E-02 2.100E-01  00:10:32 1.844E-07          24  3.051E-04 -3.111E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      2 of     20 requested intervals at  2.100001E-01
+    81364  1.500E-02 2.150E-01  00:10:48 1.844E-07          12  1.229E-03 -3.159E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      3 of     20 requested intervals at  2.150001E-01
+   108485  2.000E-02 2.200E-01  00:11:03 1.844E-07          12  3.048E-03 -3.242E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      4 of     20 requested intervals at  2.200001E-01
+   135606  2.500E-02 2.250E-01  00:11:18 1.844E-07          12  5.748E-03 -3.366E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      5 of     20 requested intervals at  2.250001E-01
+   162727  3.000E-02 2.300E-01  00:11:33 1.844E-07          12  9.045E-03 -3.531E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      6 of     20 requested intervals at  2.300001E-01
+   189848  3.500E-02 2.350E-01  00:11:49 1.844E-07          12  1.246E-02 -3.737E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      7 of     20 requested intervals at  2.350002E-01
+   216968  4.000E-02 2.400E-01  00:12:04 1.844E-07          12  1.543E-02 -3.978E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      8 of     20 requested intervals at  2.400000E-01
+   244089  4.500E-02 2.450E-01  00:12:19 1.844E-07          12  1.745E-02 -4.249E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number      9 of     20 requested intervals at  2.450001E-01
+   271209  5.000E-02 2.500E-01  00:12:35 1.844E-07          12  1.817E-02 -4.540E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     10 of     20 requested intervals at  2.500000E-01
+   298330  5.500E-02 2.550E-01  00:12:50 1.844E-07          12  1.745E-02 -4.841E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     11 of     20 requested intervals at  2.550001E-01
+   325451  6.000E-02 2.600E-01  00:13:05 1.844E-07          12  1.543E-02 -5.139E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     12 of     20 requested intervals at  2.600001E-01
+   352572  6.500E-02 2.650E-01  00:13:20 1.844E-07          12  1.246E-02 -5.422E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     13 of     20 requested intervals at  2.650000E-01
+   379694  7.000E-02 2.700E-01  00:13:36 1.844E-07          12  9.047E-03 -5.675E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     14 of     20 requested intervals at  2.700001E-01
+   406816  7.500E-02 2.750E-01  00:13:51 1.844E-07          12  5.750E-03 -5.889E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     15 of     20 requested intervals at  2.750002E-01
+   433938  8.000E-02 2.800E-01  00:14:06 1.844E-07          12  3.049E-03 -6.055E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     16 of     20 requested intervals at  2.800002E-01
+   461060  8.500E-02 2.850E-01  00:14:21 1.844E-07          12  1.229E-03 -6.171E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     17 of     20 requested intervals at  2.850001E-01
+   488182  9.000E-02 2.900E-01  00:14:37 1.844E-07          12  3.053E-04 -6.238E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     18 of     20 requested intervals at  2.900001E-01
+   515304  9.500E-02 2.950E-01  00:14:52 1.844E-07          12  2.368E-05 -6.265E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Output Field Frame Number     19 of     20 requested intervals at  2.950001E-01
+   542426  1.000E-01 3.000E-01  00:15:07 1.844E-07          12  6.648E-14 -6.270E+06
+INSTANCE WITH CRITICAL ELEMENT: STRIP
+Restart Number  1 at 0.30000
+Output Field Frame Number     20 of     20 requested intervals at  3.000000E-01
+  EXPLICIT EXECUTABLE TIME SUMMARY
+       USER TIME (SEC)      =   782.00
+       SYSTEM TIME (SEC)    =   110.90
+       WALLCLOCK TIME (SEC) =          907
+              INIT (SEC) =        903
+              MAIN (SEC) =          4
+
+  THE ANALYSIS HAS COMPLETED SUCCESSFULLY
+

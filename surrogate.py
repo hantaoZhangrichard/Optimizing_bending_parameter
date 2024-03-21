@@ -96,15 +96,17 @@ class SurrogateNet_multiMLP(nn.Module):
 
     def forward(self, x_current_state, x_parameter):
         x_current_state = self.stress_module(x_current_state)
-        print(x_current_state.shape)
+        # print(x_current_state.shape)
         x_parameter = self.parameter_module(x_parameter)
-        x = torch.cat((x_current_state, x_parameter), dim=0)
+        # print(x_parameter.shape)
+        x = torch.cat((x_current_state, x_parameter), dim=1)
+        # print(x.shape)
         future_state = self.predict_module(x)
         return future_state
 
 def load_data():
-    path_x = "/Xie_and_Zhang/dataset_X.csv"
-    path_y = "/Xie_and_Zhang/dataset_Y.csv"
+    path_x = "./dataset_X.csv"
+    path_y = "./dataset_Y.csv"
     df_x = pd.read_csv(path_x, header=None)
     df_y = pd.read_csv(path_y, header=None)
     x_stress_tensor = torch.tensor(df_x.values[0:1512], dtype=torch.double)
@@ -136,9 +138,10 @@ def train_one_epoch(epoch_index):
 def visualize(outputs, labels, rec):
     labels = labels.numpy()
     outputs = outputs.numpy()
+    print(labels.shape)
     labels = geometric_position(rec, labels)
     outputs = geometric_position(rec, outputs)
-    # print(labels.shape)
+    
     # print(labels[labels < 30])
 
     plt.figure(figsize=(12, 6))
@@ -159,7 +162,7 @@ def visualize(outputs, labels, rec):
 
 def geometric_reshape(mould_name):
     # Reconstruct the geometry of aluminium from coordinates
-    csv_path = "/Xie_and_Zhang/data/model/test0/simulation/strip_mises_Step-0.csv"
+    csv_path = "/Optimizing_bending_parameter/data/model/test0/simulation/strip_mises_Step-0.csv"
     df = pd.read_csv(csv_path)
     df = df.sort_values(by="Orig.X")
     # print(df["Orig.X"])
@@ -214,13 +217,14 @@ def geometric_reshape(mould_name):
     return rec
 
 def geometric_position(rec, data):
-    # Put stress value into the aluminium tensor 
+    # Put stress value into the aluminium tensor
+    print(data.shape)
     result = np.empty(shape=rec.shape)
     for i in range(result.shape[0]):
         for j in range(result.shape[1]):
             for k in range(result.shape[2]):
                 id = int(rec[i, j, k])
-                if data.dim() > 1:
+                if data.shape[1] > 1:
                     value = data[1, id-1]
                 else: 
                     value = data[id-1]
@@ -228,24 +232,20 @@ def geometric_position(rec, data):
     # print(result)
     return result
 
-
-    
-    
-
-
 if __name__ == "__main__":
 
-    mould_name = "test6"
+    mould_name = "test0"
     X_stress, X_parameter, y = load_data()
     X_stress = X_stress.t()
     X_parameter = X_parameter.t()
     y = y.t()
-    # print(X)
-    print(y[1][1])
+    print(X_stress.shape)
+    print(y.shape)
     X_train, X_val, p_train, p_val, y_train, y_val = train_test_split(X_stress, X_parameter, y, test_size = 0.2, random_state = 42)
     print(X_val.shape)
 
     rec = geometric_reshape(mould_name)
+    print(rec)
 
     train_dataset = TensorDataset(X_train, p_train, y_train)
     val_dataset = TensorDataset(X_val, p_val, y_val)
@@ -260,7 +260,7 @@ if __name__ == "__main__":
     loss_f = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    num_epochs = 200
+    num_epochs = 150
     best_vloss = 1000000
     for epoch in range(num_epochs):
         print("Epoch {}:".format(epoch + 1))

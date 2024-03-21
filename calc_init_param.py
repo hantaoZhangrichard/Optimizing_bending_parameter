@@ -141,7 +141,9 @@ if __name__ == "__main__":
         "k": 0.05
     })
     
+    '''
     for i in range(len(step_size)):
         D = step_size[i]
         print("Stepsize is {}".format(D))
         abs_param, pre_idx = calc_next_param(data_path, D, strip_length, pre_length, k, pre_idx)
+    '''

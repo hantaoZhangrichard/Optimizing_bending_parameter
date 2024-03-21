@@ -4,7 +4,7 @@ import os
 import subprocess
 
 mould_name = sys.argv[1]
-dir = "/Xie_and_Zhang/data/model/" + mould_name + "/simulation/"
+dir = "/Optimizing_bending_parameter/data/model/" + mould_name + "/simulation/"
 
 package_script = '''
 from abaqus import *
