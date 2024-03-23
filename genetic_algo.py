@@ -2,7 +2,7 @@ import numpy as np
 from rl_env import bending_env
 
 # Genetic Algorithm Parameters
-population_size = 1
+population_size = 10
 mutation_rate = 0.1
 num_step = 4
 
@@ -17,7 +17,7 @@ def select_parents(population, fitness):
     for _ in range(2):  # Select 2 parents for crossover
         tournament = np.random.randint(0, len(population), size=tournament_size)
         # print(tournament)
-        index = fitness.index(max(fitness[i] for i in tournament))
+        index = fitness.index(min(fitness[i] for i in tournament))
         selected_parents.append(population[index])
     return selected_parents
 
@@ -41,21 +41,30 @@ if __name__ == "__main__":
     population = initialize_population(population_size, num_step)
     env = bending_env()
     
-    num_generation = 1
-    best_fitness = np.empty((num_generation, ))
+    num_generation = 2
+    best_fitness = []
     for i in range(num_generation):
-        print("Generation:{}".format(i))
-        fitness = np.empty((population_size, ))
+        print("Generation:{}".format(i+1))
+        fitness = []
         new_population = []
-        for j in range(population_size // 2):
+        for j in range(population_size):
             env.reset()
             individual = population[j]
             for k in range(len(individual)):
                 action = individual[k]
-                _, reward, done = env.step(action)
-                if done:
+                state, reward, done, _ = env.step(action)
+                # print(state)
+                # print(done)
+
+                if done == True:
+                    if k < len(individual)-1: 
+                        reward += 5 # If it reaches the end of bending process before the final step, penalize this individual
                     break
-            fitness[j] = reward
+            if reward == 0:
+                reward = 20
+            print(reward)
+            fitness.append(reward)
+        for _ in range(population_size // 2):
             parents = select_parents(population, fitness)
             # print(parents)
             parent1 = parents[0]
@@ -66,9 +75,9 @@ if __name__ == "__main__":
             # print(mutate(child1, mutation_rate))
             new_population.extend([child1, child2])
         
-        best_fitness[i] = max(fitness)
-        print("Best fitness score in this generation:{}".format(max(fitness)))
-        best_individual = population[fitness.index(max(fitness))]
+        best_fitness.append(min(fitness))
+        print("Best fitness score in this generation:{}".format(min(fitness)))
+        best_individual = population[fitness.index(min(fitness))]
         print("Best individual in this generation:{}".format(best_individual))
         population = new_population
     

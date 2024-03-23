@@ -99,7 +99,7 @@ class SurrogateNet_multiMLP(nn.Module):
         # print(x_current_state.shape)
         x_parameter = self.parameter_module(x_parameter)
         # print(x_parameter.shape)
-        x = torch.cat((x_current_state, x_parameter), dim=1)
+        x = torch.cat((x_current_state, x_parameter), dim=0)
         # print(x.shape)
         future_state = self.predict_module(x)
         return future_state

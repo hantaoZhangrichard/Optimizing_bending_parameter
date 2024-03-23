@@ -11,6 +11,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import shutil
+import subprocess
 
 # Define the Actor network
 class Actor(nn.Module):
@@ -39,7 +40,7 @@ class Critic(nn.Module):
         return x
 
 class bending_env(gym.Env):
-    def __init__(self, episode=1):
+    def __init__(self, episode=0):
 
         # Define the state space size
         self.state_space = spaces.Box(low=0, high=200, shape=(72, 7, 3), dtype=np.double)
@@ -78,18 +79,27 @@ class bending_env(gym.Env):
     def reset(self):
         # Reset the environment
         self.num_episode += 1
-
+        self.mould_name = "test" + str(self.num_episode)
+        self.data_path_2 = "./data/mould_output/" + self.mould_name
+        self.data_path_1 = "./data/model/" + self.mould_name
         # Generate curve and mould for this episode
+        print(self.mould_name)
+        if not os.path.exists(self.data_path_2):
+            os.makedirs(self.data_path_2)
+        if not os.path.exists(self.data_path_1):
+            os.makedirs(self.data_path_1)
         cmd = ['python ', 'gen_curve_and_mould.py', self.mould_name]
+        # print(cmd)
+        
         run_cmd(cmd)
-        shutil.copy(self.data_path_2 + '\\mould.stp', self.data_path_1)
+        shutil.copy(self.data_path_2 + '/mould.stp', self.data_path_1)
 
         '''
             Initialize the state with the stress distribution after pre-stretch.
             Since the pre-strech steps are all the same for each test, we simply used the one of test 0.
         '''
         self.rec = geometric_reshape(self.mould_name)
-        csv_path = "/Xie_and_Zhang/data/model/test0/simulation/strip_mises_Step-0.csv"
+        csv_path = "/Optimizing_bending_parameter/data/model/test0/simulation/strip_mises_Step-0.csv"
         if os.path.exists(csv_path):
             df = pd.read_csv(csv_path)
             x = df["S_Mises"]
@@ -98,11 +108,13 @@ class bending_env(gym.Env):
         # geometric_position(self.rec, x)
 
         self.action_list = []  # Empty the action series
+        self.param_list = []  # Empty the param list
+        self.pre_idx = 0  # Reset pre_idx
         return self.state
 
     def step(self, action):
         self.action_list.append(action)
-        print(self.state)
+        # print(self.state)
         strip_length = 40
         pre_length = 0.1
         k = 0.05 
@@ -152,8 +164,8 @@ class bending_env(gym.Env):
             
         springback_path = self.data_path_1 + "/simulation/springback_output.csv" 
         springback = pd.read_csv(springback_path)["Springback"]
-        reward = max(springback.tolist()) * 10
-        print(reward)
+        reward = max(springback.tolist()) * 10 # Reward is the max springback deviation, so the less the better
+        # print(reward)
         return reward
 
 if __name__ == "__main__":
