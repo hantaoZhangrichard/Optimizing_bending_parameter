@@ -51,7 +51,7 @@ class bending_env(gym.Env):
         # Initialize the current state with the stress distribution after pre-stretch
         self.state = None
 
-        self.pre_idx = 0
+        self.pre_idx = None
         self.pre_param = [321.1,0.0,0.0,0,-0.0,0.0]  # Pre-stretch length
 
         # Surrogate model
@@ -109,7 +109,7 @@ class bending_env(gym.Env):
 
         self.action_list = []  # Empty the action series
         self.param_list = []  # Empty the param list
-        self.pre_idx = 0  # Reset pre_idx
+        self.pre_idx = None  # Reset pre_idx
         return self.state
 
     def step(self, action):

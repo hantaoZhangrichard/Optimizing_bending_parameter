@@ -27,6 +27,7 @@ def calc_init_param(data_path, user_config):
 def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
     '''
         Given previous parameter idx and next step size, calculate next idx
+        D is the next step size
     '''
     point_num_all = evolvent_points.shape[0] # Total number of points
     r = point_num_all - 1 # Right side of binary search
@@ -34,6 +35,8 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
     while True:
         translate_l, _ = calc_param_right(evolvent_points[pre_idx], evolvent_slopes[pre_idx])
         translate_r, _ = calc_param_right(evolvent_points[r], evolvent_slopes[r])
+
+        # Translation distance
         delta = max([abs(translate_r[i] - translate_l[i])
                             for i in range(3)])
         cur_len = math.ceil(cur_len / 2)
@@ -71,7 +74,17 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     )
 
     if pre_idx == None:
-        pre_idx = 0
+        # Initial pre-stretch step
+        next_idx = 0
+        next_point_0 = translated_curve_0[next_idx]
+        next_point_1 = translated_curve_1[next_idx]
+        initial_point_0 = translated_curve_0[0]
+        initial_point_1 = translated_curve_0[1]
+        translate, rotate = calc_param_right(evolvent_points[next_idx], evolvent_slopes[next_idx])
+        abs_param = translate.A.reshape(3).tolist() + rotate.tolist()
+        print("Parameter is {}".format(abs_param))
+        print("Idx is {}".format(next_idx))
+        return abs_param, next_idx 
 
     next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx)
 
@@ -82,6 +95,8 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     translate, rotate = calc_param_right(evolvent_points[next_idx], evolvent_slopes[next_idx])
     abs_param = translate.A.reshape(3).tolist() + rotate.tolist()
     '''
+    Don't quite understand the purpose of this chunk of codes. Seems fine without it.
+
     # # 原点
         # origin = util.param2coord_right(*param_list[i], 0, 0, 0).T[0] \
         #     - curve_1_remained_len[i] * curve_1_evolvent_slopes[i]

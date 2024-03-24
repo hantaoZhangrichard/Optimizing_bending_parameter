@@ -95,8 +95,8 @@ def calc_param_list(
     logging.info("选取的idx为：" + str(idx))
     
 
-    idx = idx_noise(idx, 200)
-    print(idx)
+    # idx = idx_noise(idx, 200)
+    # print(idx)
     resampled_curve_0 = translated_curve_0[idx]
     resampled_curve_1 = translated_curve_1[idx]
     point_num = resampled_curve_0.shape[0]
@@ -105,6 +105,7 @@ def calc_param_list(
     for i in range(point_num):
         translate, rotate = calc_param_right(evolvent_points[idx[i]], evolvent_slopes[idx[i]])
         abs_param_list.append(translate.A.reshape(3).tolist() + rotate.tolist())
+        print(translate.A.reshape(3).tolist() + rotate.tolist())
 
     # 记录拉弯曲线数据
     with open(os.path.join(recursion_path, "param_info.txt"), "w", encoding="utf-8") as f:
@@ -169,6 +170,7 @@ def calc_param_list(
         #     exit(-1)
 
     # 生成csv
+    # print(abs_param_list)
     rel_param_list = gen_param_csv(
         param_list=abs_param_list,
         output_path=recursion_path,
@@ -360,7 +362,7 @@ def gen_param_csv(*, param_list, output_path, pre_length, version):
     for idx, v in enumerate(sum_rel_param_list):
         for i in range(6):
             rst_sum[i] += v[i]
-    print(rst_sum)
+    # print(rst_sum)
 
     logging.info("生成拉弯参数的csv文件")
     return rel_param_list
