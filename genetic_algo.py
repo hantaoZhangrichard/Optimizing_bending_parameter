@@ -41,7 +41,7 @@ if __name__ == "__main__":
     population = initialize_population(population_size, num_step)
     env = bending_env()
     
-    num_generation = 2
+    num_generation = 5
     best_fitness = []
     for i in range(num_generation):
         print("Generation:{}".format(i+1))
