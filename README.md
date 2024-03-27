@@ -1,9 +1,18 @@
 # Optimizing_bending_parameter
 
 ## User guide
-- Data are collected in model and mould_output folder. Model folder contains data related to ABAQUS, mould_output folder contains mould file and bending parameter csv
-- Mould are generated using the same method. Test0 is the reference used in the interactive environment
-- Don't forget to check that mould_static exists. Otherwise can't gen_curve_and_mould
+This repository includes almost everything you need for optimizing the bending parameter to reduce the springback deviation in the process of alluminum bending production process. \\
+- How to run bending process simulation on ABAQUS:
+    1. Run gen_curve_and_mould.py. This will create a mould and the feature lines.
+    2. Run calc_init_param.py. This will generate a set of bending parameter using a gready algorithm.
+    3. Run gen_abaqus_model.py. This will generate a bending job inp file for ABAQUS software and then automatically submit the job to run finite element analysis.
+    4. Run gen_spring_back_model.py. This will generate a springback job inp file for ABAQUS and automatically submit it to get springback.
+    5. Or you can run automation.py to run entire simulation in one shot.
+
+- Details for calculating bending parameters from the involute feature lines are in the core/param_util folder. 
+- Data are collected in model and mould_output folder. Model folder contains data from ABAQUS, mould_output folder contains mould file and bending parameter csv. ABAQUS outputs are collected in the .obd file.
+- Mould are generated using the same method. Test0 is the reference used in the interactive environment rl_env.py.
+- Don't forget to check that mould_static exists. Otherwise can't run gen_curve_and_mould.py.
 
 ## Things already been done
 - Extract stress information from ODB for each step of each test and build a dataset to store them
