@@ -168,7 +168,7 @@ def geometric_reshape(mould_name):
     # print(df["Orig.X"])
     x = df["Orig.X"].to_numpy()
     coor_x, counts_x = np.unique(x, return_counts=True)
-    rec = np.empty(shape=(72, 7, 3))  # Shape of the aluminium
+    rec = np.empty(shape=(3, 7, 72))  # Shape of the aluminium
     x_i = 0
     near_x = [] # store nodes with coordinate very close to each other
     near_x_count = 0
@@ -210,7 +210,7 @@ def geometric_reshape(mould_name):
             
             line = line.sort_values(by="Orig.Z")
             
-            rec[x_i, y_i] = line["Node_ID"].to_numpy()
+            rec[:, y_i, x_i] = line["Node_ID"].to_numpy()
             y_i += 1
         x_i += 1
     # Shape: 72*7*3
@@ -218,16 +218,18 @@ def geometric_reshape(mould_name):
 
 def geometric_position(rec, data):
     # Put stress value into the aluminium tensor
-    print(data.shape)
+    # print(data.shape)
     result = np.empty(shape=rec.shape)
     for i in range(result.shape[0]):
         for j in range(result.shape[1]):
             for k in range(result.shape[2]):
                 id = int(rec[i, j, k])
-                if data.shape[1] > 1:
-                    value = data[1, id-1]
-                else: 
+                try:  
+                    print(data.shape[1] > 1)
+                except:
                     value = data[id-1]
+                else: 
+                    value = data[1, id-1]
                 result[i, j, k] = value
     # print(result)
     return result

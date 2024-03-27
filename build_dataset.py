@@ -112,4 +112,4 @@ def build_springback_dataset(start, end):
 if __name__ == "__main__":
     # step_data_collection(72, 100)
     # build_dataset(5, 99)
-    build_springback_dataset(1, 50)
+    build_springback_dataset(1, 89)
