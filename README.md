@@ -22,9 +22,10 @@ This repository includes almost everything you need for optimizing the bending p
 - Build a naive surrogate model with multi-input (stress distribution and bending parameter) to predict next state stress distribution. Best validation MSE: 30~
 - Reorganized data file system
 - Implement Genetic Algorithm in the environment, 5 generations with population size 10: from 1.42 to 1.36
+- Build another surrogate model to predict springback from final state stress distribution
 
 ## Things to be done
 - Finish the reinforcement learning framework with environment being the naive surrogate model
 - Write script to let Abaqus run per-step analysis
 - Build dataset: from last step stress distribution to spring back
-- Build another surrogate model to predict springback from final state stress distribution
+- Consider the design of reward function. Now just use max springback.

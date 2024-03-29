@@ -13,32 +13,6 @@ import torch.optim as optim
 import shutil
 import subprocess
 
-# Define the Actor network
-class Actor(nn.Module):
-    def __init__(self, input_dim, output_dim):
-        super(Actor, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 64)
-        self.fc2 = nn.Linear(64, output_dim)
-        self.relu = nn.ReLU()
-
-    def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.fc2(x)
-        return x
-
-# Define the Critic network
-class Critic(nn.Module):
-    def __init__(self, input_dim):
-        super(Critic, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 64)
-        self.fc2 = nn.Linear(64, 1)
-        self.relu = nn.ReLU()
-
-    def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.fc2(x)
-        return x
-
 class bending_env(gym.Env):
     def __init__(self, episode=0):
 
