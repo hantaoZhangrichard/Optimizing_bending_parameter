@@ -64,9 +64,9 @@ def train_one_epoch(epoch_index):
             stress_inputs, labels = data
             optimizer.zero_grad()
             outputs = model(stress_inputs.double())
-            print(stress_inputs.shape)
-            print(outputs)
-            print(labels)
+            # print(stress_inputs.shape)
+            # print(outputs)
+            # print(labels)
             loss = loss_f(outputs, labels)
             loss.backward()
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     loss_f = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    num_epochs = 150
+    num_epochs = 50
     best_vloss = 1000000
     for epoch in range(num_epochs):
         print("Epoch {}:".format(epoch + 1))
