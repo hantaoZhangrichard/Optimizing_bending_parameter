@@ -82,8 +82,8 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
         initial_point_1 = translated_curve_0[1]
         translate, rotate = calc_param_right(evolvent_points[next_idx], evolvent_slopes[next_idx])
         abs_param = translate.A.reshape(3).tolist() + rotate.tolist()
-        print("Parameter is {}".format(abs_param))
-        print("Idx is {}".format(next_idx))
+        # print("Parameter is {}".format(abs_param))
+        # print("Idx is {}".format(next_idx))
         return abs_param, next_idx 
 
     next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx)
@@ -134,8 +134,8 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     abs_param[3] = theta_x
     print(theta_x)
     '''
-    print("Parameter is {}".format(abs_param))
-    print("Idx is {}".format(next_idx))
+    # print("Parameter is {}".format(abs_param))
+    # print("Idx is {}".format(next_idx))
     return abs_param, next_idx
 
 
