@@ -287,7 +287,7 @@ mdb.models['{model_name}'].rootAssembly.Instance(
         name='mould',
         part=mdb.models['{model_name}'].parts['mould'],
     )
-mdb.models['Model_base'].rootAssembly.translate(instanceList=('mould', ), 
+mdb.models['{model_name}'].rootAssembly.translate(instanceList=('mould', ), 
     vector=(0.0, -8.0, 0.0))
 
 # step 5 设置铝条和模具的接触关系
@@ -323,8 +323,8 @@ mdb.models['{model_name}'].interactions['Int-1'].contactPropertyAssignments.appe
 # 23/08/21 这里的面选择好像有些问题
 mdb.models['{model_name}'].interactions['Int-1'].includedPairs.setValuesInStep(
     addPairs=((
-    mdb.models['Model_base'].rootAssembly.instances['mould'].surfaces['surf_down'], 
-    mdb.models['Model_base'].rootAssembly.instances['strip'].surfaces['surf_length']), 
+    mdb.models['{model_name}'].rootAssembly.instances['mould'].surfaces['surf_down'], 
+    mdb.models['{model_name}'].rootAssembly.instances['strip'].surfaces['surf_length']), 
     ), stepName='Initial')
 
 # step 6 设置铝条和模具的绑定约束

@@ -279,59 +279,59 @@ class CreateModelScriptGenerator:
                 ur1=0,
             ))
         if not self.config["step_config"]["only_use_amp_table"]:
-            self.__gen_v1()
+            self._gen_v1()
         else:
             self.__gen_v2()
 
-    def __gen_v1(self):
-        for index, val in enumerate(self.config["param_list"][1:]):
+    def _gen_v1(self, step=1):
+        for index, val in enumerate(self.config["param_list"][step:step+1]):
             # 跳过预拉伸
             time_period = self.config["step_config"]["global_time_period"]
             # 创建分析步
             self._script_io_wrapper.write(STEP_SCRIPT_STR.format(
                 model_name=self.config["model_name"],
-                step_name=f"Step-{index + 1}",
-                previous_step_name=f"Step-{index}",
+                step_name=f"Step-{step+index}",
+                previous_step_name=f"Step-{step+index-1}",
                 time_period=time_period,
             ))
             # 添加边界条件
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="translate_x",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 u1=val[0],
             ))
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="translate_y",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 u2=val[1],
             ))
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="translate_z",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 u3=val[2],
             ))
             # z轴转动
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="rotate_z",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 ur1=val[5],
             ))
             # y轴转动
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="rotate_y",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 ur1=val[4],
             ))
             # x轴转动
             self._script_io_wrapper.write(self.__add_BC_str(
                 bc_name="rotate_x",
                 amp="amp_basic",
-                step_name=f"Step-{index + 1}",
+                step_name=f"Step-{step+index}",
                 ur1=val[3],
             ))
 
@@ -442,8 +442,8 @@ class CreateModelScriptGenerator:
         ))
     
     # Submit job
-    def _gen_submit_job(self):
+    def _gen_submit_job(self, job_name="Job-Model_base_0"):
         self._script_io_wrapper.write("executeOnCaeStartup()\n")
         self._script_io_wrapper.write("openMdb(\"{}\")\n".format(self.config["cae_path"]))
-        self._script_io_wrapper.write("mdb.jobs['Job-Model_base'].submit(consistencyChecking=OFF)\n")
+        self._script_io_wrapper.write("mdb.jobs['{}'].submit(consistencyChecking=OFF)\n".format(job_name))
         self._script_io_wrapper.write("mdb.save()\n\n")
