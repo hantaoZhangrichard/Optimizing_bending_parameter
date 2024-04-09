@@ -11,7 +11,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import shutil
-import subprocess
+from data_collection import stress_collection_script
+
 
 class bending_env(gym.Env):
     def __init__(self, episode=0):
@@ -27,6 +28,9 @@ class bending_env(gym.Env):
 
         self.pre_idx = None
         self.pre_param = [321.1,0.0,0.0,0,-0.0,0.0]  # Pre-stretch length
+        self.strip_length = 40
+        self.pre_length = 0.1
+        self.k = 0.05
 
         # Surrogate model
         self.model = SurrogateNet_multiMLP(1512, 1512)
@@ -44,7 +48,7 @@ class bending_env(gym.Env):
 
         self.num_episode = episode
 
-        self.mould_name = "test" + str(self.num_episode)
+        self.mould_name = "test0_ep" + str(self.num_episode)
 
         # Some useful data path
         self.data_path_2 = "./data/mould_output/" + self.mould_name
@@ -53,7 +57,7 @@ class bending_env(gym.Env):
     def reset(self):
         # Reset the environment
         self.num_episode += 1
-        self.mould_name = "test" + str(self.num_episode)
+        self.mould_name = "test0_ep" + str(self.num_episode)
         self.data_path_2 = "./data/mould_output/" + self.mould_name
         self.data_path_1 = "./data/model/" + self.mould_name
         # Generate curve and mould for this episode
@@ -62,11 +66,8 @@ class bending_env(gym.Env):
             os.makedirs(self.data_path_2)
         if not os.path.exists(self.data_path_1):
             os.makedirs(self.data_path_1)
-        cmd = ['python ', 'gen_curve_and_mould.py', self.mould_name]
-        # print(cmd)
         
-        run_cmd(cmd)
-        shutil.copy(self.data_path_2 + '/mould.stp', self.data_path_1)
+        shutil.copy('./data/mould_output/test0/mould.stp', self.data_path_1)
 
         '''
             Initialize the state with the stress distribution after pre-stretch.
@@ -85,6 +86,29 @@ class bending_env(gym.Env):
         self.action_list = []  # Empty the action series
         self.param_list = []  # Empty the param list
         self.pre_idx = None  # Reset pre_idx
+
+        # Perform the pre-stretch step
+        next_param, self.pre_idx = calc_next_param("./data/mould_output/" + "test0", 0, 
+                                                    self.strip_length, 
+                                                    self.pre_length, 
+                                                    self.k, 
+                                                    self.pre_idx)
+        self.param_list.append(next_param)
+
+        rel_param_list = gen_param_csv(
+            param_list=self.param_list,
+            output_path=self.data_path_2,
+            pre_length=0.1,
+            version="base",
+        )
+
+        cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(0)]
+        run_cmd(cmd)
+
+        """
+            Extract stress distribution from ODB
+        """
+        stress_collection_script(data_path=self.data_path_1+"/simulation/", step=0)
         return self.state
 
     def step(self, action):
@@ -94,15 +118,26 @@ class bending_env(gym.Env):
         pre_length = 0.1
         k = 0.05 
         # Adding the next parameter to the list
-        next_param, self.pre_idx = calc_next_param("./data/mould_output/" + self.mould_name, action, strip_length, pre_length, k, self.pre_idx)
+        next_param, self.pre_idx = calc_next_param("./data/mould_output/" + "test0", action, strip_length, pre_length, k, self.pre_idx)
         self.param_list.append(next_param)
+
+        step = len(self.param_list) - 1
         t = (np.array(next_param - np.array(self.param_list[-2]))).tolist()
         t = torch.tensor(t[:2] + [t[5]], dtype=torch.float32)
         # Execute the given action and return the next state, reward, and whether the episode is done
-        self.model.eval()
 
-        self.state = self.model(self.state, t)  # Surrogate model as transition function
-        
+        # Transfer to relative parameter and store in a csv
+        rel_param_list = gen_param_csv(
+            param_list=self.param_list,
+            output_path=self.data_path_2,
+            pre_length=0.1,
+            version="base",
+        )
+
+        cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(step)]
+        run_cmd(cmd)
+        stress_collection_script(data_path=self.data_path_1+"/simulation/", step=step)
+
         # Check if the episode is done and calculate the reward
         if self.pre_idx == 1999:
             reward = self.calculate_reward()

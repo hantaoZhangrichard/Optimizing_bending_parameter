@@ -49,6 +49,36 @@ for i in range(num_step):
     f.close()\n
 '''
 
+stress_extraction_script_2 = '''
+step_name = "Step-" + str({step_num})
+step = odb.steps[step_name]
+mises = step.frames[-1]
+mises_output = mises.fieldOutputs["S"]
+
+instance = odb.rootAssembly.instances["STRIP"]
+strip_nodes = instance.nodeSets['SET_ALL']
+
+# Mises are recorded on element object
+strip_elements = instance.elementSets['SET_ALL']
+# print len(strip.elements)
+
+
+output = mises_output.getSubset(region=strip_elements)
+output_values = output.values
+rpt_path = \"{}\" + "strip_mises_" + step_name + ".rpt"
+
+with open(rpt_path, "w") as f:
+    f.write("Node_ID    S_Mises    Orig.X      Orig.Y      Orig.Z \\n")
+    for v in output.values:
+        element_id = v.elementLabel
+        connected_nodes = strip_elements.elements[element_id-1].connectivity
+        for node_id in connected_nodes:
+            coordinates = strip_nodes.nodes[node_id-1].coordinates
+            f.write(str(node_id) + " " + str(v.mises) + " " + str(coordinates[0]) + " " + str(coordinates[1]) + " " + str(coordinates[2]) + "\\n")
+
+f.close()\n
+'''
+
 springback_extraction_script = '''
 step_name = "Step-1"
 step = odb.steps[step_name]
@@ -78,16 +108,23 @@ with open(rpt_path, "w") as f:
 f.close()\n
 '''
 
-def stress_collection_script():
-    script_path = os.path.join(dir, "stress_collection_script.py")
+def stress_collection_script(data_path, step=None):
+    script_path = os.path.join(data_path, "stress_collection_script.py")
     # print(script_path)
-    odb_path = os.path.join(dir, "Job-Model_base.odb")
-    
-    with open(script_path, "w", encoding="utf-8") as f:
-        f.write(package_script)
-        f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
-        f.write(stress_extraction_script.format(dir))
-        f.write("odb.close()")
+    if step == None:
+        odb_path = os.path.join(data_path, "Job-Model_base.odb")
+        with open(script_path, "w", encoding="utf-8") as f:
+            f.write(package_script)
+            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path, step_name=step))
+            f.write(stress_extraction_script.format(dir))
+            f.write("odb.close()")
+    else:
+        odb_path = os.path.join(data_path, "Job-Model_base_{}.odb".format(step))
+        with open(script_path, "w", encoding="utf-8") as f:
+            f.write(package_script)
+            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path, step_name=step))
+            f.write(stress_extraction_script.format(dir))
+            f.write("odb.close()")
     
     f.close()
 
@@ -148,7 +185,7 @@ def springback_collection_script():
     print("Successfully generated springback collection script for {}".format(mould_name))
 
 if __name__ == "__main__":
-    stress_collection_script()
+    stress_collection_script(data_path=dir)
     
     springback_collection_script()
 

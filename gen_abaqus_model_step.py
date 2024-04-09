@@ -123,12 +123,13 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         self._script_io_wrapper.close()
         self._script_io_wrapper = None
     
-    def gen_one_step(self):
+    def gen_one_step(self, data_path):
         print(self.step)
         self._script_io_wrapper = open(self.config["output_file"], "w", encoding="utf-8")
         self._gen_header_script()
         self._script_io_wrapper.write("executeOnCaeStartup()\n")
         self._script_io_wrapper.write("openMdb(\"{}\")\n".format(self.config["cae_path"]))
+        self._script_io_wrapper.write("os.chdir('{}')\n".format((data_path+"/simulation")).replace("\\", "/"))
         self._script_io_wrapper.write("mdb.Model(name='Model_base_{}', objectToCopy=mdb.models['Model_base_{}'])\n".format(str(self.step), str(self.step-1)))
         self._script_io_wrapper.write(
             "mdb.models['Model_base_{}'].setValues(restartJob='Job-Model_base_{}', restartStep='Step-{}')\n".format(
@@ -140,7 +141,7 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         nodalOutputPrecision=SINGLE, echoPrint=OFF, modelPrint=OFF, 
         contactPrint=OFF, historyPrint=OFF, userSubroutine='', scratch='', 
         resultsFormat=ODB, parallelizationMethodExplicit=DOMAIN, numDomains={cpu_num}, 
-        activateLoadBalancing=False, multiprocessingMode=DEFAULT, numCpus={cpu_num})\nmdb.jobs['Job-{step_name}'].writeInput()\n"""
+        activateLoadBalancing=False, multiprocessingMode=DEFAULT, numCpus={cpu_num})\nmdb.jobs['Job-Model_base_{step_name}'].writeInput()\n"""
         self._script_io_wrapper.write(job_script.format(
             step_name = str(self.step),
             model_name = self.config["model_name"],
@@ -233,7 +234,7 @@ def gen_abaqus_model(data_path: str, user_config: dict, step: int):
     else:
         model_generator = CustomCreateModelScriptGenerator(step)
         model_generator.set_config(_config)
-        model_generator.gen_one_step()
+        model_generator.gen_one_step(data_path)
 
     print("生成abaqus建模脚本")
     print("运行abaqus建模脚本")

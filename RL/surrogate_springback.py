@@ -9,7 +9,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
-from surrogate import geometric_reshape, geometric_position
+from RL.surrogate import geometric_reshape, geometric_position
 
 class SurrogateNet_springback(nn.Module):
     def __init__(self, rec):

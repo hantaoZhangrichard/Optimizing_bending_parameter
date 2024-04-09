@@ -80,6 +80,7 @@ class CreateModelScriptGenerator:
         self._check_config("new_model", "model_name")
         self._script_io_wrapper.write(HEADER_SCRIPT_STR)
         self._script_io_wrapper.write("\nfrom abaqus import *\nfrom abaqusConstants import *\nfrom caeModules import *\nfrom driverUtils import executeOnCaeStartup\n")
+        self._script_io_wrapper.write("import os\n")
         if self.config["new_model"]:
             self._script_io_wrapper.write(MODEL_SCRIPT_STR.format(model_name=self.config["model_name"]))
 
@@ -436,7 +437,7 @@ class CreateModelScriptGenerator:
         ))
 
     def _gen_save_model(self):
-        self._script_io_wrapper.write("del mdb.models['Model-1']\n")
+        # self._script_io_wrapper.write("del mdb.models['Model-1']\n")
         self._script_io_wrapper.write("mdb.saveAs(pathName=\"{}\")\n\n".format(
             self.config["cae_path"]
         ))
