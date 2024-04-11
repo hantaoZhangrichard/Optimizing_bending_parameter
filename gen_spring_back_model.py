@@ -23,10 +23,14 @@ from connectorBehavior import *
 """
 
 
-def build_spring_back(data_path, file_name="base"):
+def build_spring_back(data_path, step=None, file_name="base"):
     inp_name = "Job-Model_springback"
     spring_back_name = "springback_" + file_name
-    model_name = 'Model_' + file_name
+    if step != None:
+        # if analysis is performed step by step, just use the output of the last step
+        model_name = 'Model_' + file_name + "_{}".format(step)
+    else:
+        model_name = 'Model_' + file_name
     recursion_path = data_path
     my_cae_path = os.path.join(recursion_path, "main.cae").replace("\\", "/")
     script_path = os.path.join(recursion_path, "script_spring_back.py").replace("\\", "/")
@@ -80,9 +84,9 @@ def build_spring_back(data_path, file_name="base"):
         sys.stdout = old_stdout
 
 
-def generate_springback_script(data_path: str):
+def generate_springback_script(data_path: str, step=None):
     data_path = os.path.abspath(data_path)
-    build_spring_back(data_path)
+    build_spring_back(data_path, step)
     p = subprocess.Popen(
         ["cmd", "/c", "abaqus", "cae", "noGUI=script_spring_back"],
         cwd=data_path,
@@ -101,6 +105,7 @@ def generate_springback_script(data_path: str):
         exit(-1)
 
 mould_name = sys.argv[1]
+step_name = sys.argv[2]
 
 if __name__ == "__main__":
     logging.basicConfig(
@@ -108,4 +113,4 @@ if __name__ == "__main__":
         format="%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
-    generate_springback_script("./data/model/" + mould_name + "/simulation/")
+    generate_springback_script("./data/model/" + mould_name + "/simulation/", step_name)

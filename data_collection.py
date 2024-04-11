@@ -108,34 +108,47 @@ with open(rpt_path, "w") as f:
 f.close()\n
 '''
 
-def stress_collection_script(data_path, step=None):
+def stress_collection_script(data_path, mould_name, step=None):
     script_path = os.path.join(data_path, "stress_collection_script.py")
     # print(script_path)
     if step == None:
         odb_path = os.path.join(data_path, "Job-Model_base.odb")
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(package_script)
-            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path, step_name=step))
-            f.write(stress_extraction_script.format(dir))
+            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
+            f.write(stress_extraction_script.format(data_path))
             f.write("odb.close()")
     else:
         odb_path = os.path.join(data_path, "Job-Model_base_{}.odb".format(step))
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(package_script)
-            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path, step_name=step))
-            f.write(stress_extraction_script.format(dir))
+            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
+            f.write(stress_extraction_script_2.format(data_path, step_num = step))
             f.write("odb.close()")
     
     f.close()
 
     print("Successfully generated stress collection script for {}".format(mould_name))
 
-def rpt_to_csv():
+    p = subprocess.Popen(
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(data_path, 'stress_collection_script')}"],
+        cwd=data_path,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
+    p.wait(40)
+    if p.poll() == 0:
+        print('Stress collection success')
+    else:
+        print('Stress collection failure')
+    rpt_to_csv(data_path)
+
+def rpt_to_csv(data_path):
     step_check = True
     i = 0
     while step_check:
         step_name = "Step-" + str(i)
-        rpt_path = dir + "strip_mises_" + step_name + ".rpt"
+        rpt_path = data_path + "strip_mises_" + step_name + ".rpt"
         if os.path.exists(rpt_path):
             df = pd.read_csv(rpt_path, delim_whitespace=True)
             df = df.groupby(by="Node_ID").mean()
@@ -150,7 +163,7 @@ def rpt_to_csv():
             i += 1
         else:
             step_check = False
-    rpt_path = dir + "springback_output" + ".rpt"
+    rpt_path = data_path + "springback_output" + ".rpt"
     if os.path.exists(rpt_path):
             df = pd.read_csv(rpt_path, delim_whitespace=True)
             df = df.groupby(by="Node_ID").mean()
@@ -169,41 +182,24 @@ def data_cleaning(df):
 
     return new_df
 
-def springback_collection_script():
-    script_path = os.path.join(dir, "springback_collection_script.py")
+def springback_collection_script(data_path):
+    script_path = os.path.join(data_path, "springback_collection_script.py")
     # print(script_path)
-    odb_path = os.path.join(dir, "Job-Model_springback.odb")
+    odb_path = os.path.join(data_path, "Job-Model_springback.odb")
     
     with open(script_path, "w", encoding="utf-8") as f:
         f.write(package_script)
         f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
-        f.write(springback_extraction_script.format(dir))
+        f.write(springback_extraction_script.format(data_path))
         f.write("odb.close()")
     
     f.close()
 
     print("Successfully generated springback collection script for {}".format(mould_name))
 
-if __name__ == "__main__":
-    stress_collection_script(data_path=dir)
-    
-    springback_collection_script()
-
     p = subprocess.Popen(
-        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(dir, 'stress_collection_script')}"],
-        cwd=dir,
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-    )
-    p.wait(40)
-    if p.poll() == 0:
-        print('Stress collection success')
-    else:
-        print('Stress collection failure')
-    
-    p = subprocess.Popen(
-        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(dir, 'springback_collection_script')}"],
-        cwd=dir,
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(data_path, 'springback_collection_script')}"],
+        cwd=data_path,
         stderr=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
@@ -212,6 +208,13 @@ if __name__ == "__main__":
         print('Springback collection success')
     else:
         print('Springback collection failure')
+
+    rpt_to_csv(data_path)
+
+if __name__ == "__main__":
+    stress_collection_script(data_path=dir)
+    
+    springback_collection_script(dir)
 
     rpt_to_csv()
 
