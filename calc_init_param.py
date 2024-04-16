@@ -57,8 +57,10 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
 
 def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None):
 
-    curve_0 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_0.txt"))
-    curve_1 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_1.txt"))
+    # curve_0 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_0.txt"))
+    curve_0 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test0\\feature_line_from_ug_0.txt")
+    # curve_1 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_1.txt"))
+    curve_1 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test0\\feature_line_from_ug_1.txt")
     logging.info("正在计算参数")
     length_after_pre = strip_length + pre_length
     logging.info("预拉伸后的长度为：" + str(length_after_pre))

@@ -124,7 +124,7 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         self._script_io_wrapper = None
     
     def gen_one_step(self, data_path):
-        print(self.step)
+        # print(self.step)
         self._script_io_wrapper = open(self.config["output_file"], "w", encoding="utf-8")
         self._gen_header_script()
         self._script_io_wrapper.write("executeOnCaeStartup()\n")
@@ -240,6 +240,7 @@ def gen_abaqus_model(data_path: str, user_config: dict, step: int):
     print("运行abaqus建模脚本")
     print("abaqus建模脚本位置：" + f"{os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}")
     print("abaqus 工作路径：" + os.path.join(recursion_path, _config["simulation_root"]))
+    
     p = subprocess.Popen(
         ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}"],
         cwd=os.path.join(recursion_path, _config["simulation_root"]),
@@ -255,6 +256,7 @@ def gen_abaqus_model(data_path: str, user_config: dict, step: int):
         p.kill()
         print("abaqus脚本运行失败，请检查代码")
         exit(-1)
+    
     print("cae保存位置为：" + _config["cae_path"])
 
 mould_name = sys.argv[1]
@@ -262,11 +264,11 @@ step = int(sys.argv[2])
 if __name__ == "__main__":
     # 这里用某种方式得到一个列表
     param_list = []
-    with open("./data/mould_output/" + mould_name + "/param_base_rel.csv") as f:
+    with open("/Optimizing_bending_parameter/data/mould_output/" + mould_name + "/param_base_rel.csv") as f:
         param_list = list(map(lambda x: list(map(float, x.split(","))), f.readlines()))
 
     gen_abaqus_model(
-        data_path="./data/model/" + mould_name,
+        data_path="/Optimizing_bending_parameter/data/model/" + mould_name,
         # param_list=
         user_config={
         # 矩形截面形状，对角线上的两个点

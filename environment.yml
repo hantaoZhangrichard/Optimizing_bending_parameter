@@ -9,4 +9,4 @@ dependencies:
   - pytorch
   - seaborn
   - scikit-learn
-  
+  - gymnasium

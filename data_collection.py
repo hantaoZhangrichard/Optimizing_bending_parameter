@@ -112,17 +112,17 @@ def stress_collection_script(data_path, mould_name, step=None):
     script_path = os.path.join(data_path, "stress_collection_script.py")
     # print(script_path)
     if step == None:
-        odb_path = os.path.join(data_path, "Job-Model_base.odb")
+        # odb_path = os.path.join(data_path, "Job-Model_base.odb")
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(package_script)
-            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
+            f.write("odb = session.openOdb(name=\"Job-Model_base.odb\")")
             f.write(stress_extraction_script.format(data_path))
             f.write("odb.close()")
     else:
-        odb_path = os.path.join(data_path, "Job-Model_base_{}.odb".format(step))
+        # odb_path = os.path.join(data_path, "Job-Model_base_{}.odb".format(step))
         with open(script_path, "w", encoding="utf-8") as f:
             f.write(package_script)
-            f.write("odb = session.openOdb(name=\"{}\")".format(odb_path))
+            f.write("odb = session.openOdb(name=\"{}\")".format("Job-Model_base_{}.odb".format(step)))
             f.write(stress_extraction_script_2.format(data_path, step_num = step))
             f.write("odb.close()")
     
@@ -182,7 +182,7 @@ def data_cleaning(df):
 
     return new_df
 
-def springback_collection_script(data_path):
+def springback_collection_script(data_path, mould_name):
     script_path = os.path.join(data_path, "springback_collection_script.py")
     # print(script_path)
     odb_path = os.path.join(data_path, "Job-Model_springback.odb")
@@ -212,9 +212,9 @@ def springback_collection_script(data_path):
     rpt_to_csv(data_path)
 
 if __name__ == "__main__":
-    stress_collection_script(data_path=dir)
+    stress_collection_script(dir, mould_name)
     
-    springback_collection_script(dir)
+    springback_collection_script(dir, mould_name)
 
     rpt_to_csv()
 
