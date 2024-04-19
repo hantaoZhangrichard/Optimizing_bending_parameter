@@ -10,6 +10,7 @@ import pandas as pd
 import torch
 import shutil
 from data_collection import stress_collection_script, springback_collection_script
+import subprocess
 
 strip_length = 40
 pre_length = 0.1
@@ -96,6 +97,24 @@ class bending_env(gym.Env):
         cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(0)]
         run_cmd(cmd)
 
+        step_name = "Step-" + str(self.num_step)
+        recursion_path = os.path.abspath(self.data_path_1)
+        p = subprocess.Popen(
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}"],
+        cwd=recursion_path,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
+        try:
+            outs, errs = p.communicate(timeout=2400)
+            # print(outs.decode("utf-8"))
+            # print(errs.decode("utf-8"))
+            print("abaqus脚本执行成功")
+        except TimeoutError:
+            p.kill()
+            print("abaqus脚本运行失败，请检查代码")
+            exit(-1)
+
 
         # Extract stress distribution from ODB
         stress_collection_script(data_path=self.data_path_1+"/simulation/", mould_name=self.mould_name, step=0)
@@ -126,17 +145,41 @@ class bending_env(gym.Env):
 
         cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(self.num_step)]
         run_cmd(cmd)
+
+        step_name = "Step-" + str(self.num_step)
+        recursion_path = os.path.abspath(self.data_path_1)
+        p = subprocess.Popen(
+        ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}"],
+        cwd=recursion_path,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+    )
+        
+        try:
+            outs, errs = p.communicate(timeout=2400)
+            # print(outs.decode("utf-8"))
+            # print(errs.decode("utf-8"))
+            print("abaqus脚本执行成功")
+        except TimeoutError:
+            p.kill()
+            print("abaqus脚本运行失败，请检查代码")
+            exit(-1)
+
+
         stress_collection_script(data_path=self.data_path_1+"/simulation/", mould_name=self.mould_name, step=self.num_step)
 
         # Check if the episode is done and calculate the reward
         reward = self.calculate_reward()
+        print(reward)
 
         if self.pre_idx == 1999:    
             springback = self.get_springback()
             done = True
         else:
-            done = False  
-        return self.state, reward, done, springback, {}
+            springback = 0
+            done = False
+
+        return self.state, reward, done, springback
     
     def calculate_reward(self):
         '''
@@ -153,7 +196,7 @@ class bending_env(gym.Env):
 
         # Save action series to a csv
         action_list = pd.DataFrame(self.action_list)
-        action_list.to_csv(self.data_path_1 + "action_list.csv")
+        action_list.to_csv(self.data_path_1 + "/action_list.csv")
 
         print(self.param_list)
         rel_param_list = gen_param_csv(
@@ -163,7 +206,7 @@ class bending_env(gym.Env):
             version="base",
         )
 
-        cmd = ['python ', 'gen_spring_back_model.py', self.mould_name, self.num_step]
+        cmd = ['python ', 'gen_spring_back_model.py', self.mould_name, str(self.num_step)]
         run_cmd(cmd)
         
         springback_collection_script(self.data_path_1+"/simulation/", self.mould_name)

@@ -73,7 +73,7 @@ def build_spring_back(data_path, step=None, file_name="base"):
             'rp.StaticStep(name=\'Step-1\', previous=\'Initial\', maxNumInc=10000, initialInc=1e-07, minInc=1e-10, nlgeom=ON)')
         print('instances=(rp.rootAssembly.instances[\'strip\'], )')
         print(
-            'rp.InitialState(updateReferenceConfiguration=ON, fileName=\'Job-Model_base\', endStep=LAST_STEP, endIncrement=STEP_END, name=\'Predefined Field-1\', createStepName=\'Initial\', instances=instances)')
+            'rp.InitialState(updateReferenceConfiguration=ON, fileName=\'Job-%s\', endStep=LAST_STEP, endIncrement=STEP_END, name=\'Predefined Field-1\', createStepName=\'Initial\', instances=instances)' % (model_name)) 
 
         print(
             'mdb.Job(name=\'%s\', model=\'%s\', description=\'\', memory=90, memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, explicitPrecision=SINGLE, nodalOutputPrecision=FULL, echoPrint=OFF, modelPrint=OFF, contactPrint=OFF, historyPrint=OFF, userSubroutine=\'\', scratch=\'\', resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=16, numDomains=16, numGPUs=0)' % (

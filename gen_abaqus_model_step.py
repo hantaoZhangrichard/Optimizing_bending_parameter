@@ -240,24 +240,28 @@ def gen_abaqus_model(data_path: str, user_config: dict, step: int):
     print("运行abaqus建模脚本")
     print("abaqus建模脚本位置：" + f"{os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}")
     print("abaqus 工作路径：" + os.path.join(recursion_path, _config["simulation_root"]))
-    
+    '''
     p = subprocess.Popen(
         ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(recursion_path, 'script_create_model_{}'.format(step_name))}"],
         cwd=os.path.join(recursion_path, _config["simulation_root"]),
         stderr=subprocess.PIPE,
         stdout=subprocess.PIPE,
+        text=True,
     )
     try:
         outs, errs = p.communicate(timeout=2400)
-        print(outs.decode("utf-8"))
-        print(errs.decode("utf-8"))
+        print(outs)
+        print(errs)
+        # print(outs.decode("utf-8"))
+        # print(errs.decode("utf-8"))
         print("abaqus脚本执行成功")
     except TimeoutError:
         p.kill()
         print("abaqus脚本运行失败，请检查代码")
         exit(-1)
-    
+    print(p.returncode)
     print("cae保存位置为：" + _config["cae_path"])
+    '''
 
 mould_name = sys.argv[1]
 step = int(sys.argv[2])
