@@ -154,7 +154,7 @@ def rpt_to_csv(data_path):
             df = df.groupby(by="Node_ID").mean()
             df = df.sort_values(by="Node_ID")
             new_df = data_cleaning(df)
-            print(len(new_df["S_Mises"]))
+            # print(len(new_df["S_Mises"]))
             if len(new_df["S_Mises"]) < 1512:
                 print(df["S_Mises"])
             csv_path = rpt_path.replace(".rpt", ".csv")
@@ -168,7 +168,7 @@ def rpt_to_csv(data_path):
             df = pd.read_csv(rpt_path, delim_whitespace=True)
             df = df.groupby(by="Node_ID").mean()
             df = df.sort_values(by="Node_ID")
-            print(len(df["Springback"]))
+            # print(len(df["Springback"]))
             csv_path = rpt_path.replace(".rpt", ".csv")
             # print(csv_path)
             df.to_csv(csv_path)

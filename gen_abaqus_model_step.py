@@ -107,7 +107,7 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         self.mesh_script = None
         self.step = step
 
-    def gen_all(self):
+    def gen_all(self, data_path):
         self._script_io_wrapper = open(self.config["output_file"], "w", encoding="utf-8")
         self._gen_header_script()
         self._gen_clamp_script()
@@ -117,6 +117,7 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         self._gen_mesh()
         self._gen_assembly_script()
         self._gen_step_script()
+        self._script_io_wrapper.write("os.chdir('{}')\n".format((data_path+"/simulation")).replace("\\", "/"))
         self._gen_job_script()
         self._gen_save_model()
         self._gen_submit_job()
@@ -230,7 +231,7 @@ def gen_abaqus_model(data_path: str, user_config: dict, step: int):
         model_generator = CustomCreateModelScriptGenerator()
         model_generator.set_config(_config)
 
-        model_generator.gen_all()
+        model_generator.gen_all(data_path)
     else:
         model_generator = CustomCreateModelScriptGenerator(step)
         model_generator.set_config(_config)

@@ -172,7 +172,7 @@ class bending_env(gym.Env):
         reward = self.calculate_reward()
         print(reward)
 
-        if self.pre_idx == 1999:    
+        if self.pre_idx == 1949:    
             springback = self.get_springback()
             done = True
         else:
@@ -189,13 +189,14 @@ class bending_env(gym.Env):
         '''
         pre_stress_dist = self.stress_dist
         self.stress_dist = self.stress_extract()
-        reward = sum(self.stress_dist - pre_stress_dist)
+        reward = sum(self.stress_dist - pre_stress_dist) / len(self.stress_dist)
         return reward
 
     def get_springback(self):
 
         # Save action series to a csv
         action_list = pd.DataFrame(self.action_list)
+        print(action_list)
         action_list.to_csv(self.data_path_1 + "/action_list.csv")
 
         print(self.param_list)
@@ -234,10 +235,10 @@ class bending_env(gym.Env):
         return x
 
 if __name__ == "__main__":
-    env = bending_env(episode=1)
+    env = bending_env(episode=3)
     initial_state = env.reset()
     while True:
-        action = np.random.randint(1, 5)
+        action = np.random.randint(1,5)
         state, reward, done, _ = env.step(action)
         if done == True:
             break

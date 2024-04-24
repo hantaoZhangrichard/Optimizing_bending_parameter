@@ -29,7 +29,7 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
         Given previous parameter idx and next step size, calculate next idx
         D is the next step size
     '''
-    point_num_all = evolvent_points.shape[0] # Total number of points
+    point_num_all = evolvent_points.shape[0] -50 # Total number of points
     r = point_num_all - 1 # Right side of binary search
     cur_len = point_num_all - pre_idx
     while True:
