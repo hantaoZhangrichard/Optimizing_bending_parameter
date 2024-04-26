@@ -215,11 +215,11 @@ mould_name = sys.argv[1]
 if __name__ == "__main__":
     # 这里用某种方式得到一个列表
     param_list = []
-    with open("./data/mould_output/" + mould_name + "/param_base_rel.csv") as f:
+    with open("C:/Optimizing_bending_parameter/data/mould_output/" + mould_name + "/param_base_rel.csv") as f:
         param_list = list(map(lambda x: list(map(float, x.split(","))), f.readlines()))
 
     gen_abaqus_model(
-        data_path="./data/model/" + mould_name,
+        data_path="C:/Optimizing_bending_parameter/data/model/" + mould_name,
         # param_list=
         user_config={
         # 矩形截面形状，对角线上的两个点

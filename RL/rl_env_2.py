@@ -38,10 +38,11 @@ class bending_env(gym.Env):
         self.action_list = []  # Record series of actions for each episode for future use
 
         self.max_step = 10  # Max number of bending steps
-
-        self.num_episode = episode
-
-        self.mould_name = "test0_ep" + str(self.num_episode)
+        if episode == None:
+            self.mould_name = "test1"
+        else:
+            self.num_episode = episode
+            self.mould_name = "test1_ep" + str(self.num_episode)
 
         # Some useful data path
         self.data_path_2 = "/Optimizing_benidng_parameter/data/mould_output/" + self.mould_name
@@ -52,7 +53,7 @@ class bending_env(gym.Env):
             Reset the environment
         '''
         self.num_episode += 1
-        self.mould_name = "test0_ep" + str(self.num_episode)
+        self.mould_name = "test1_ep" + str(self.num_episode)
         self.num_step = 0
         self.data_path_2 = "/Optimizing_bending_parameter/data/mould_output/" + self.mould_name
         self.data_path_1 = "/Optimizing_bending_parameter/data/model/" + self.mould_name
@@ -63,7 +64,7 @@ class bending_env(gym.Env):
         if not os.path.exists(self.data_path_1):
             os.makedirs(self.data_path_1)
         
-        shutil.copy('./data/mould_output/test0/mould.stp', self.data_path_1)
+        shutil.copy('./data/mould_output/test1/mould.stp', self.data_path_1)
 
         
         # Since the pre-stretch steps are all the same for each test, we simply used the one of test 0.
@@ -78,14 +79,14 @@ class bending_env(gym.Env):
         
 
         # Perform the pre-stretch step
-        next_param, self.pre_idx = calc_next_param("\Optimizing_bending_parameter\data\mould_output\\" + "test0", 0, 
+        next_param, self.pre_idx = calc_next_param("\Optimizing_bending_parameter\data\mould_output\\" + "test1", 0, 
                                                     strip_length, 
                                                     pre_length, 
                                                     k, 
                                                     self.pre_idx)
         self.param_list.append(next_param)
 
-        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32)
+        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32) + 1e-6
 
         rel_param_list = gen_param_csv(
             param_list=self.param_list,
@@ -125,14 +126,23 @@ class bending_env(gym.Env):
     def step(self, action):
         self.action_list.append(action)
         # print(self.state)
+
+        remain_len = 1999 - self.pre_idx
         
         # Adding the next parameter to the list
-        next_param, self.pre_idx = calc_next_param("\Optimizng_bending_parameter\data\mould_output\\" + "test0", action, strip_length, pre_length, k, self.pre_idx)
+        next_param, self.pre_idx = calc_next_param("\Optimizng_bending_parameter\data\mould_output\\" + "test1", action, strip_length, pre_length, k, self.pre_idx)
+        
+        if self.pre_idx == 1960:
+            springback = self.get_springback()
+            done = True
+            return self.state, reward_1, reward_2, reward_3, remain_len, done, springback
+        else:
+            pass
         self.param_list.append(next_param)
 
         self.num_step += 1
 
-        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32)
+        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32) + 1e-6
         # Execute the given action and return the next state, reward, and whether the episode is done
 
         # Transfer to relative parameter and store it in a csv
@@ -169,28 +179,30 @@ class bending_env(gym.Env):
         stress_collection_script(data_path=self.data_path_1+"/simulation/", mould_name=self.mould_name, step=self.num_step)
 
         # Check if the episode is done and calculate the reward
-        reward = self.calculate_reward()
-        print(reward)
+        reward_1, reward_2, reward_3 = self.calculate_reward()
+        # print(reward)
 
-        if self.pre_idx == 1949:    
+        if self.pre_idx == 1959:    
             springback = self.get_springback()
             done = True
         else:
             springback = 0
             done = False
 
-        return self.state, reward, done, springback
+        return self.state, reward_1, reward_2, reward_3, remain_len, done, springback
     
     def calculate_reward(self):
         '''
-            stress_dist: tensor
+            stress_dist: np array
             Reward is given by the sum of increase of stress on each element (for now)
             better representation?
         '''
         pre_stress_dist = self.stress_dist
         self.stress_dist = self.stress_extract()
-        reward = sum(self.stress_dist - pre_stress_dist) / len(self.stress_dist)
-        return reward
+        reward_1 = np.sum(self.stress_dist - pre_stress_dist) / len(self.stress_dist)
+        reward_2 = np.max(self.stress_dist) - np.max(pre_stress_dist)
+        reward_3 = np.var(self.stress_dist) - np.var(pre_stress_dist)
+        return reward_1, reward_2, reward_3
 
     def get_springback(self):
 
@@ -213,9 +225,9 @@ class bending_env(gym.Env):
         springback_collection_script(self.data_path_1+"/simulation/", self.mould_name)
 
         springback_path = self.data_path_1 + "/simulation/springback_output.csv" 
-        springback = pd.read_csv(springback_path)["Springback"]
-        score = max(springback.tolist()) * 10  # Score is the max springback deviation, so the less the better
-        # print(reward)
+        springback = pd.read_csv(springback_path)["Springback"].to_numpy()
+        score = - np.max(springback) * 10  # Score is the max springback deviation, so the less the better
+        
         return score
     
     def stress_extract(self):
@@ -230,15 +242,25 @@ class bending_env(gym.Env):
         )
         if os.path.exists(csv_path):
             df = pd.read_csv(csv_path)
-            x = df["S_Mises"]
-            x = torch.tensor(x, dtype=torch.float32)
+            x = df["S_Mises"].to_numpy()
+            
+            # x = torch.tensor(x, dtype=torch.float32)
         return x
 
 if __name__ == "__main__":
-    env = bending_env(episode=3)
-    initial_state = env.reset()
-    while True:
-        action = np.random.randint(1,5)
-        state, reward, done, _ = env.step(action)
-        if done == True:
-            break
+    env = bending_env(episode=None)
+    cum_reward_1 = 0
+    cum_reward_2 = 0
+    cum_reward_3 = 0
+    env.reset()
+    done = False
+    while not done:
+        print("You are currently at: {}".format(env.state))
+        # action = float(input("Choose your next action"))
+        # action = np.random.randint(1, 10)
+        action = 8
+        state, reward_1, reward_2, reward_3, remain_len, done, springback = env.step(action)
+        print("Stress cumulated in this step is {} and {}".format(reward_1, reward_2))
+        cum_reward_1 += reward_1.item()
+        cum_reward_2 += reward_2.item()
+        cum_reward_3 += reward_3.item()

@@ -64,6 +64,7 @@ def write_txt(filename: str, points: np.ndarray):
             for i in range(len(p) - 1):
                 f.write(f"{p[i]} ")
             f.write(f"{p[-1]}\n")
+    
 
 def get_points_from_stp(stp_path):
     output_path = stp_path.replace('stp', 'txt')
@@ -95,10 +96,10 @@ if __name__ == "__main__":
     )
     curve_3d_0 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1))))
     curve_3d_1 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1)) + 1))
-    static_path = "./data/mould_static/"
-    recursion_path = f"./data/mould_output/{mould_name}/"
-    write_txt(f"./data/mould_output/{mould_name}/feature_line_for_ug_0.txt", curve_3d_0)
-    write_txt(f"./data/mould_output/{mould_name}/feature_line_for_ug_1.txt", curve_3d_1)
+    static_path = "C:/Optimizing_bending_parameter/data/mould_static/"
+    recursion_path = f"C:/Optimizing_bending_parameter/data/mould_output/{mould_name}/"
+    write_txt(f"C:/Optimizing_bending_parameter/data/mould_output/{mould_name}/feature_line_for_ug_0.txt", curve_3d_0)
+    write_txt(f"C:/Optimizing_bending_parameter/data/mould_output/{mould_name}/feature_line_for_ug_1.txt", curve_3d_1)
     print("模具数据路径:", recursion_path)
 
     # 定位生成模具的 exe 路径

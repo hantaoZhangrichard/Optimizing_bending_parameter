@@ -24,12 +24,16 @@ def calc_init_param(data_path, user_config):
     print(param_list)
 
 
-def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
+def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1, last_idx=None):
     '''
         Given previous parameter idx and next step size, calculate next idx
         D is the next step size
     '''
-    point_num_all = evolvent_points.shape[0] -50 # Total number of points
+    if last_idx is None:
+        point_num_all = evolvent_points.shape[0]  # 总点数
+    else:
+        point_num_all = last_idx  # 总点数
+    
     r = point_num_all - 1 # Right side of binary search
     cur_len = point_num_all - pre_idx
     while True:
@@ -47,7 +51,8 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
             else:
                 r = r + cur_len
                 if r > point_num_all - 1:
-                    r = point_num_all - 1
+                    r = point_num_all
+                    return r
         elif delta > D + radius:
             r = r - cur_len
             if r <= pre_idx:
@@ -58,9 +63,9 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1):
 def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None):
 
     # curve_0 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_0.txt"))
-    curve_0 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test0\\feature_line_from_ug_0.txt")
+    curve_0 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test1\\feature_line_from_ug_0.txt")
     # curve_1 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_1.txt"))
-    curve_1 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test0\\feature_line_from_ug_1.txt")
+    curve_1 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test1\\feature_line_from_ug_1.txt")
     logging.info("正在计算参数")
     length_after_pre = strip_length + pre_length
     logging.info("预拉伸后的长度为：" + str(length_after_pre))
@@ -81,23 +86,25 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
         next_point_0 = translated_curve_0[next_idx]
         next_point_1 = translated_curve_1[next_idx]
         initial_point_0 = translated_curve_0[0]
-        initial_point_1 = translated_curve_0[1]
+        initial_point_1 = translated_curve_1[0]
         translate, rotate = calc_param_right(evolvent_points[next_idx], evolvent_slopes[next_idx])
         abs_param = translate.A.reshape(3).tolist() + rotate.tolist()
         # print("Parameter is {}".format(abs_param))
         # print("Idx is {}".format(next_idx))
         return abs_param, next_idx 
 
-    next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx)
+    next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, last_idx=round(curve_0.shape[0] * 0.98))
+    print("Idx is {}".format(next_idx))
 
     next_point_0 = translated_curve_0[next_idx]
     next_point_1 = translated_curve_1[next_idx]
     initial_point_0 = translated_curve_0[0]
-    initial_point_1 = translated_curve_0[1]
+    initial_point_1 = translated_curve_1[0]
     translate, rotate = calc_param_right(evolvent_points[next_idx], evolvent_slopes[next_idx])
     abs_param = translate.A.reshape(3).tolist() + rotate.tolist()
     '''
     Don't quite understand the purpose of this chunk of codes. Seems fine without it.
+    '''
 
     # # 原点
         # origin = util.param2coord_right(*param_list[i], 0, 0, 0).T[0] \
@@ -134,14 +141,14 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
             theta_x = -theta_x
 
     abs_param[3] = theta_x
-    print(theta_x)
-    '''
-    # print("Parameter is {}".format(abs_param))
+    # print(theta_x)
+    
+    print("Parameter is {}".format(abs_param))
     # print("Idx is {}".format(next_idx))
     return abs_param, next_idx
 
 
-step_size = [3, 2, 4, 6]
+step_size = [8, 8]
 pre_idx = 0
 strip_length = 40
 pre_length = 0.1
@@ -149,7 +156,7 @@ k = 0.05
 
 if __name__ == "__main__":
     mould_name = sys.argv[1]
-    data_path = "./data/mould_output/" + mould_name
+    data_path = "C:/Optimizing_bending_parameter/data/mould_output/" + mould_name
     
     calc_init_param(data_path, user_config={
         "strip_length": 40,
@@ -158,9 +165,9 @@ if __name__ == "__main__":
         "k": 0.05
     })
     
-    '''
+    
     for i in range(len(step_size)):
         D = step_size[i]
         print("Stepsize is {}".format(D))
         abs_param, pre_idx = calc_next_param(data_path, D, strip_length, pre_length, k, pre_idx)
-    '''
+    

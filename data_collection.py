@@ -155,8 +155,8 @@ def rpt_to_csv(data_path):
             df = df.sort_values(by="Node_ID")
             new_df = data_cleaning(df)
             # print(len(new_df["S_Mises"]))
-            if len(new_df["S_Mises"]) < 1512:
-                print(df["S_Mises"])
+            # if len(new_df["S_Mises"]) < 1512:
+                # print(df["S_Mises"])
             csv_path = rpt_path.replace(".rpt", ".csv")
             # print(csv_path)
             df.to_csv(csv_path)
