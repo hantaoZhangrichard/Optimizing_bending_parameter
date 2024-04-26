@@ -138,8 +138,8 @@ class CustomCreateModelScriptGenerator(CreateModelScriptGenerator):
         self._gen_v1(self.step)
         job_script = """mdb.Job(name='Job-Model_base_{step_name}', model='{model_name}', description='', type=RESTART, 
         atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=90, 
-        memoryUnits=PERCENTAGE, explicitPrecision=SINGLE, 
-        nodalOutputPrecision=SINGLE, echoPrint=OFF, modelPrint=OFF, 
+        memoryUnits=PERCENTAGE, explicitPrecision=DOUBLE_PLUS_PACK, 
+        nodalOutputPrecision=FULL, echoPrint=OFF, modelPrint=OFF, 
         contactPrint=OFF, historyPrint=OFF, userSubroutine='', scratch='', 
         resultsFormat=ODB, parallelizationMethodExplicit=DOMAIN, numDomains={cpu_num}, 
         activateLoadBalancing=False, multiprocessingMode=DEFAULT, numCpus={cpu_num})\nmdb.jobs['Job-Model_base_{step_name}'].writeInput()\n"""
