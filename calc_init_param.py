@@ -46,13 +46,15 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1, last_i
         cur_len = math.ceil(cur_len / 2)
 
         if delta < D - radius:
+            # If the step size is too large, return an abnormal value as (total number of points)+1
             if r == point_num_all - 1:
                 return r
             else:
                 r = r + cur_len
                 if r > point_num_all - 1:
-                    r = point_num_all
+                    r = point_num_all - 1
                     return r
+            
         elif delta > D + radius:
             r = r - cur_len
             if r <= pre_idx:
@@ -95,6 +97,9 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
 
     next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, last_idx=round(curve_0.shape[0] * 0.98))
     print("Idx is {}".format(next_idx))
+    
+    # if next_idx == round(curve_0.shape[0] * 0.98) + 1:
+        # return None, next_idx
 
     next_point_0 = translated_curve_0[next_idx]
     next_point_1 = translated_curve_1[next_idx]
@@ -148,7 +153,7 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     return abs_param, next_idx
 
 
-step_size = [8, 8]
+step_size = [9, 9]
 pre_idx = 0
 strip_length = 40
 pre_length = 0.1
@@ -161,7 +166,7 @@ if __name__ == "__main__":
     calc_init_param(data_path, user_config={
         "strip_length": 40,
         "pre_length": 0.1,
-        "max_step_dis": 8,
+        "max_step_dis": 9,
         "k": 0.05
     })
     

@@ -17,25 +17,27 @@ pre_length = 0.1
 k = 0.05
 
 class bending_env(gym.Env):
-    def __init__(self, episode=0):
+    def __init__(self, k=0.0, episode=0):
 
         # Define the state space size
-        self.state_space = spaces.Box(low=-500, high=500, shape=(3, ), dtype=np.float64)
+        self.state_space = spaces.Box(low=-50000, high=50000, shape=(3, ), dtype=np.float64)
 
         # Define the action space size
         self.action_space = spaces.Discrete(n=15, start=1)
 
+        self.k = k
         self.num_step = None
         self.state = None
         self.stress_dist = None
 
         self.pre_idx = None
-        self.pre_param = [321.1,0.0,0.0,0,-0.0,0.0]  # Pre-stretch length
 
         # Bending Parameter list
         self.param_list = []  # To be considered: add the pre-stretch parameter to it
 
         self.action_list = []  # Record series of actions for each episode for future use
+
+        self.k_list = []
 
         self.max_step = 10  # Max number of bending steps
         if episode == None:
@@ -74,6 +76,7 @@ class bending_env(gym.Env):
         # geometric_position(self.rec, x)
 
         self.action_list = []  # Empty the action series
+        self.k_list = []
         self.param_list = []  # Empty the param list
         self.pre_idx = None  # Reset pre_idx
         
@@ -82,11 +85,9 @@ class bending_env(gym.Env):
         next_param, self.pre_idx = calc_next_param("\Optimizing_bending_parameter\data\mould_output\\" + "test1", 0, 
                                                     strip_length, 
                                                     pre_length, 
-                                                    k, 
+                                                    self.k, 
                                                     self.pre_idx)
         self.param_list.append(next_param)
-
-        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32) + 1e-6
 
         rel_param_list = gen_param_csv(
             param_list=self.param_list,
@@ -94,6 +95,11 @@ class bending_env(gym.Env):
             pre_length=0.1,
             version="base",
         )
+
+        rel_param = rel_param_list[-1]
+
+        self.state = torch.tensor(rel_param[:2] + [rel_param[5]], dtype=torch.float32) * 1000 + 1e-6
+
 
         cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(0)]
         run_cmd(cmd)
@@ -123,26 +129,30 @@ class bending_env(gym.Env):
 
         return self.state
 
-    def step(self, action):
-        self.action_list.append(action)
+    def step(self, action, k):
+        
+        self.k = k
+        self.k_list.append(self.k)
         # print(self.state)
 
-        remain_len = 1999 - self.pre_idx
-        
+        # remain_len = 1999 - self.pre_idx
+        # pre_idx = self.pre_idx
         # Adding the next parameter to the list
-        next_param, self.pre_idx = calc_next_param("\Optimizng_bending_parameter\data\mould_output\\" + "test1", action, strip_length, pre_length, k, self.pre_idx)
+        next_param, self.pre_idx = calc_next_param("\Optimizng_bending_parameter\data\mould_output\\" + "test1", action, strip_length, pre_length, self.k, self.pre_idx)
         
         if self.pre_idx == 1960:
             springback = self.get_springback()
             done = True
-            return self.state, reward_1, reward_2, reward_3, remain_len, done, springback
+            return self.state, None, None, None, done, springback
         else:
             pass
+        
+        # forward_len = self.pre_idx - pre_idx
+        self.action_list.append(action)
         self.param_list.append(next_param)
 
         self.num_step += 1
 
-        self.state = torch.tensor(next_param[:2] + [next_param[5]], dtype=torch.float32) + 1e-6
         # Execute the given action and return the next state, reward, and whether the episode is done
 
         # Transfer to relative parameter and store it in a csv
@@ -152,6 +162,10 @@ class bending_env(gym.Env):
             pre_length=0.1,
             version="base",
         )
+
+        rel_param = rel_param_list[-1]
+
+        self.state = torch.tensor(rel_param[:2] + [rel_param[5]], dtype=torch.float32) * 1000 + 1e-6
 
         cmd = ['python ', 'gen_abaqus_model_step.py', self.mould_name, str(self.num_step)]
         run_cmd(cmd)
@@ -182,14 +196,15 @@ class bending_env(gym.Env):
         reward_1, reward_2, reward_3 = self.calculate_reward()
         # print(reward)
 
-        if self.pre_idx == 1959:    
+        if self.pre_idx == 1959: 
+            # remain_len = 0 
             springback = self.get_springback()
             done = True
         else:
             springback = 0
             done = False
 
-        return self.state, reward_1, reward_2, reward_3, remain_len, done, springback
+        return self.state, reward_1, reward_2, reward_3, done, springback
     
     def calculate_reward(self):
         '''
@@ -207,7 +222,7 @@ class bending_env(gym.Env):
     def get_springback(self):
 
         # Save action series to a csv
-        action_list = pd.DataFrame(self.action_list)
+        action_list = pd.DataFrame({"action": self.action_list, "k": self.k_list})
         print(action_list)
         action_list.to_csv(self.data_path_1 + "/action_list.csv")
 
