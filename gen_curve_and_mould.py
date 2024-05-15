@@ -5,6 +5,7 @@ import numpy as np
 import subprocess
 import automation as at
 import sys
+import matplotlib.pyplot as plt
 
 from scipy.interpolate import CubicSpline
 
@@ -50,6 +51,39 @@ def gen_curve_2d(n, x_limit, a_limit, b_a_limit, length_limit):
     # print(cs(np.linspace(0, )) - curve)
     return cs(length_sample)
 
+def bezier_curve(n, control_points, length_limit):
+    '''
+        n: number of points
+        control points: first point need to be (0,0)
+    '''
+    t = np.linspace(0, 1, n)
+    curve = np.zeros((n, 2))
+    num_points = len(control_points) - 1
+    # print(curve[1, :])
+    for i in range(n):
+        for j, point in enumerate(control_points):
+            curve[i, :] += point * np.math.comb(num_points, j) * ((1 - t[i]) ** (num_points - j)) * (t[i] ** j)
+    # resample
+    shifted_points = np.vstack([curve[0:1], curve[:-1]])
+    segment_len = np.apply_along_axis(
+        lambda x: math.sqrt(x[0] * x[0] + x[1] * x[1]), 1, curve-shifted_points
+    )
+    cumsum_len = np.cumsum(segment_len)
+    len_percent = cumsum_len / length_limit  # 进行一次归一化，将长度转换成百分比
+    print(cumsum_len)
+    # print(len_percent)
+    # print(cumsum_len)
+    # print(len_percent)
+    # print(curve)
+    cs = CubicSpline(len_percent, curve)
+    length_sample = np.linspace(0, 1, n)
+    # print(cs(length_sample))
+    # print(np.hstack((length_sample.reshape((len(length_sample), 1)), cs(length_sample))))
+    # print(cs(np.linspace(0, )) - curve)
+    return cs(length_sample)
+    
+
+
 def write_txt(filename: str, points: np.ndarray):
     """
     将点数据写入txt
@@ -87,6 +121,7 @@ def get_points_from_stp(stp_path):
 
 
 if __name__ == "__main__":
+    '''
     curve_2d = gen_curve_2d(
         n=point_num,
         x_limit=(0, 40),
@@ -94,8 +129,18 @@ if __name__ == "__main__":
         b_a_limit=(0.1, 0.4),
         length_limit=40,
     )
-    curve_3d_0 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1))))
-    curve_3d_1 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1)) + 1))
+    '''
+    
+    control_points = [np.array([0,0]), np.array([25, -2]), np.array([30, -2]), np.array([40, -10])]
+    curve_2d = bezier_curve(n=point_num, control_points=control_points, length_limit=40)
+    x = curve_2d[:,0]
+    y = curve_2d[:,1]
+    plt.plot(x, y)
+    plt.show()
+    # curve_3d_0 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1))))
+    # curve_3d_1 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1)) + 1))
+    curve_3d_0 = np.insert(curve_2d, 1, 0.0, axis=1)
+    curve_3d_1 = np.insert(curve_2d, 1, -20.0, axis=1)
     static_path = "C:/Optimizing_bending_parameter/data/mould_static/"
     recursion_path = f"C:/Optimizing_bending_parameter/data/mould_output/{mould_name}/"
     write_txt(f"C:/Optimizing_bending_parameter/data/mould_output/{mould_name}/feature_line_for_ug_0.txt", curve_3d_0)

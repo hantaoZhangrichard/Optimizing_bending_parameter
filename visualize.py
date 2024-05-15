@@ -20,41 +20,53 @@ def read_curve(strip_length, pre_length, k):
     evolvent_points, evolvent_slopes, remained_len = calc_evolvent_with_stretch(
         translated_curve_0, length_after_pre - translated_curve_0[0][0], length_after_pre, k, need_remained_len=True
     )
-    print(evolvent_points)
+    # print(evolvent_points)
     return curve_0, evolvent_points, evolvent_slopes
 
-def get_clamp_loc(evolvent_points, evolvent_slopes, test_name):
+def get_clamp_loc(strip_length, pre_length, test_name):
     data_path = "C:\Optimizing_bending_parameter\data\model\\" + test_name + "\\action_list.csv"
     action_list = pd.read_csv(data_path)
-    print(action_list["0"][1])
-    clamp_move = [0]
+    print(action_list["action"][1])
+    clamp_idx = [0]
+    clamp_move = []
     for i in range(len(action_list)):
-        pre_idx = clamp_move[-1]
-        idx = calc_next_idx(evolvent_points, evolvent_slopes, action_list["0"][i], pre_idx, radius=1)
-        clamp_move.append(idx)
+        move = action_list["action"][i]
+        k = action_list["k"][i]
+        curve_0, evolvent_points, evolvent_slopes = read_curve(strip_length, pre_length, k)
+        if clamp_move == []:
+            start_point = evolvent_points[0]
+            clamp_move.append(start_point)
+        pre_idx = clamp_idx[-1]
+        idx = calc_next_idx(evolvent_points, evolvent_slopes, move, pre_idx, radius=1)
+        clamp_idx.append(idx)
+        clamp_move.append(evolvent_points[idx])
     print(clamp_move)
     return clamp_move
 
-def curve_visualize(curve_0, evolvent_points, clamp_move):
-    x = evolvent_points[:, 0]
-    y = evolvent_points[:, 1]
-    z = evolvent_points[:, 2]
-
-    x2 = curve_0[:, 0]
-    y2 = curve_0[:, 1]
-    z2 = curve_0[:, 2]
-    # Plot the curve
+def curve_visualize(strip_length, pre_length, k_list, test_name):
+    clamp_move = get_clamp_loc(strip_length, pre_length, test_name)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot(x, y, z, color="blue")
+    for i in range(len(k_list)):
+        k = k_list[i]
+        curve_0, evolvent_points, evolvent_slopes = read_curve(strip_length, pre_length, k)
+        x = evolvent_points[:, 0]
+        y = evolvent_points[:, 1]
+        z = evolvent_points[:, 2]
+
+        x2 = curve_0[:, 0]
+        y2 = curve_0[:, 1]
+        z2 = curve_0[:, 2]
+    # Plot the curve
+        ax.plot(x, y, z, color="blue")
     # ax.plot(x2, y2, z2, color="green")
-    '''
+    
     # Plot straight lines between highlighted points
     for i in range(len(clamp_move) - 1):
-        idx1 = clamp_move[i]
-        idx2 = clamp_move[i + 1]
-        ax.plot([x[idx1], x[idx2]], [y[idx1], y[idx2]], [z[idx1], z[idx2]], color='red', linestyle='-', linewidth=2)
-    '''
+        point1 = clamp_move[i]
+        point2 = clamp_move[i + 1]
+        ax.plot([point1[0], point2[0]], [point1[1], point2[1]], [point1[2], point2[2]], color='red', linestyle='-', linewidth=2)
+    
     # Set labels and title
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
@@ -68,7 +80,28 @@ def curve_visualize(curve_0, evolvent_points, clamp_move):
 if __name__ == "__main__":
     strip_length = 40
     pre_length = 0.1
-    k = 0.05
-    curve_0, evolvent_points, evolvent_slopes = read_curve(strip_length, pre_length, k)
-    clamp_move = get_clamp_loc(evolvent_points, evolvent_slopes, "test0_ep2")
-    curve_visualize(curve_0, evolvent_points, clamp_move)
+    k_list = np.linspace(0, 0.1, 20)
+    curve_visualize(strip_length, pre_length, k_list, "test3_ep1051")
+    '''
+    curve_0, evolvent_points, evolvent_slopes = read_curve(strip_length, pre_length, k=0)
+    x = evolvent_points[:, 0]
+    y = evolvent_points[:, 1]
+    z = evolvent_points[:, 2]
+    x2 = curve_0[:, 0]
+    y2 = curve_0[:, 1]
+    z2 = curve_0[:, 2]
+    plt.plot(x2, z2)
+    plt.show()
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot(x, y, z, color="blue")
+    # ax.plot(x2, y2, z2, color="red")
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.set_title('3D Curve Visualization')
+
+    # Show plot
+    plt.show()
+    '''

@@ -36,17 +36,24 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1, last_i
     
     r = point_num_all - 1 # Right side of binary search
     cur_len = point_num_all - pre_idx
-    while True:
+    translate_start, _ = calc_param_right(evolvent_points[0], evolvent_slopes[0])
+    translate_end, _ = calc_param_right(evolvent_points[r], evolvent_slopes[r])
+    distance = max([abs(translate_end[i] - translate_start[i])
+                            for i in range(3)])
+    D = D * distance
+    for i in range(10):
         translate_l, _ = calc_param_right(evolvent_points[pre_idx], evolvent_slopes[pre_idx])
         translate_r, _ = calc_param_right(evolvent_points[r], evolvent_slopes[r])
+        # print(translate_r)
 
         # Translation distance
         delta = max([abs(translate_r[i] - translate_l[i])
                             for i in range(3)])
+        # print(delta)
         cur_len = math.ceil(cur_len / 2)
-
+        # print(cur_len)
+        # print(r)
         if delta < D - radius:
-            # If the step size is too large, return an abnormal value as (total number of points)+1
             if r == point_num_all - 1:
                 return r
             else:
@@ -56,6 +63,7 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1, last_i
                     return r
             
         elif delta > D + radius:
+            # print(r)
             r = r - cur_len
             if r <= pre_idx:
                 r = pre_idx + 1
@@ -65,9 +73,9 @@ def calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, radius=1, last_i
 def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None):
 
     # curve_0 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_0.txt"))
-    curve_0 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test1\\feature_line_from_ug_0.txt")
+    curve_0 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test3\\feature_line_from_ug_0.txt")
     # curve_1 = read_txt(os.path.join(recursion_path, "feature_line_from_ug_1.txt"))
-    curve_1 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test1\\feature_line_from_ug_1.txt")
+    curve_1 = read_txt("C:\Optimizing_bending_parameter\data\mould_output\\test3\\feature_line_from_ug_1.txt")
     logging.info("正在计算参数")
     length_after_pre = strip_length + pre_length
     logging.info("预拉伸后的长度为：" + str(length_after_pre))
@@ -81,6 +89,7 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     evolvent_points, evolvent_slopes, remained_len = calc_evolvent_with_stretch(
         translated_curve_0, length_after_pre - translated_curve_0[0][0], length_after_pre, k, need_remained_len=True
     )
+    # print(evolvent_points)
 
     if pre_idx == None:
         # Initial pre-stretch step
@@ -95,7 +104,7 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
         # print("Idx is {}".format(next_idx))
         return abs_param, next_idx 
 
-    next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, last_idx=round(curve_0.shape[0] * 0.98))
+    next_idx = calc_next_idx(evolvent_points, evolvent_slopes, D, pre_idx, last_idx=round(curve_0.shape[0] * 0.99))
     print("Idx is {}".format(next_idx))
     
     # if next_idx == round(curve_0.shape[0] * 0.98) + 1:
@@ -153,7 +162,7 @@ def calc_next_param(recursion_path, D, strip_length, pre_length, k, pre_idx=None
     return abs_param, next_idx
 
 
-step_size = [9, 9]
+step_size = [0.5, 0.3, 0.4]
 pre_idx = 0
 strip_length = 40
 pre_length = 0.1
@@ -162,13 +171,14 @@ k = 0.05
 if __name__ == "__main__":
     mould_name = sys.argv[1]
     data_path = "C:/Optimizing_bending_parameter/data/mould_output/" + mould_name
-    
+    '''
     calc_init_param(data_path, user_config={
         "strip_length": 40,
         "pre_length": 0.1,
         "max_step_dis": 9,
         "k": 0.05
     })
+    '''
     
     
     for i in range(len(step_size)):

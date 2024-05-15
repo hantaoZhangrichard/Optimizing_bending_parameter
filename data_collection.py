@@ -128,7 +128,7 @@ def stress_collection_script(data_path, mould_name, step=None):
     
     f.close()
 
-    print("Successfully generated stress collection script for {}".format(mould_name))
+    # print("Successfully generated stress collection script for {}".format(mould_name))
 
     p = subprocess.Popen(
         ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(data_path, 'stress_collection_script')}"],
@@ -173,7 +173,7 @@ def rpt_to_csv(data_path):
             # print(csv_path)
             df.to_csv(csv_path)
 
-    print ("data cleaning finished")
+    # print ("data cleaning finished")
 
 def data_cleaning(df):
 
@@ -182,10 +182,10 @@ def data_cleaning(df):
 
     return new_df
 
-def springback_collection_script(data_path, mould_name):
-    script_path = os.path.join(data_path, "springback_collection_script.py")
+def springback_collection_script(data_path, mould_name, step=None):
+    script_path = os.path.join(data_path, "springback_collection_script_{}.py".format(step))
     # print(script_path)
-    odb_path = os.path.join(data_path, "Job-Model_springback.odb")
+    odb_path = os.path.join(data_path, "Job-Model_springback_{}.odb".format(step))
     
     with open(script_path, "w", encoding="utf-8") as f:
         f.write(package_script)
@@ -195,7 +195,7 @@ def springback_collection_script(data_path, mould_name):
     
     f.close()
 
-    print("Successfully generated springback collection script for {}".format(mould_name))
+    # print("Successfully generated springback collection script for {}".format(mould_name))
 
     p = subprocess.Popen(
         ["cmd", "/c", "abaqus", "cae", f"noGUI={os.path.join(data_path, 'springback_collection_script')}"],

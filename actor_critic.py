@@ -23,9 +23,9 @@ class Actor(nn.Module):
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         # print(self.fc3(x))
-        probs = F.softmax((self.fc3(x)), dim=0)
+        x = self.fc3(x)
         # print(probs)
-        return probs
+        return x
 
 # Define the Critic network
 class Critic(nn.Module):
@@ -49,10 +49,12 @@ class Critic(nn.Module):
 
 
 class Agent():
-    def __init__(self, input_dim, n_actions, gamma=0.99, lr=1e-1):
+    def __init__(self, input_dim, n_actions, max_move, max_k, gamma=0.99, lr=1e-4):
         super(Agent, self).__init__()
         self.input_dim = input_dim
         self.n_actions = n_actions
+        self.max_move = max_move
+        self.max_k = max_k
         self.actor = Actor(self.input_dim, self.n_actions, alpha=lr)
         self.critic = Critic(self.input_dim, alpha=lr)
         self.gamma = gamma
@@ -60,12 +62,25 @@ class Agent():
         
     def choose_action(self, observation):
         # x = torch.tensor(observation)
-        probs = self.actor.forward(observation)
-        action_probs = torch.distributions.Categorical(probs)
-        action = action_probs.sample()
-        self.log_probs = action_probs.log_prob(action)
-        print("Action is {}".format(action))
-        return action.item()
+        x = self.actor.forward(observation)
+        # print(x)
+        move = x[0]
+        move_sigma = torch.exp(x[1]) + 1e-6
+        k = x[2]
+        k_sigma = torch.exp(x[2]) + 1e-6
+        
+        move_probs = torch.distributions.Normal(move, move_sigma)
+        k_probs = torch.distributions.Normal(k, k_sigma)
+        action_move = move_probs.sample()
+
+        move = self.max_move * torch.sigmoid(action_move)
+        action_k = k_probs.sample()
+        k = self.max_k * torch.sigmoid(action_k)
+
+        self.log_probs = move_probs.log_prob(action_move) + k_probs.log_prob(action_k)
+
+        print("Move is {}, k is {}".format(move, k))
+        return move.item(), k.item()
         
     def learn(self, state, new_state, reward, done):
         self.actor.optimizer.zero_grad()
@@ -90,7 +105,7 @@ class Agent():
             
 
 if __name__ == "__main__":
-    agent = Agent(input_dim=3, n_actions=10)
+    agent = Agent(input_dim=3, max_move=8, max_k=0.05, n_actions=2)
     observation = np.array([1, 2, 3], dtype=np.float32)
     action = agent.choose_action(observation)
     print(action)
