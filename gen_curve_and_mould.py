@@ -7,6 +7,7 @@ import automation as at
 import sys
 import matplotlib.pyplot as plt
 
+from scipy.optimize import least_squares
 from scipy.interpolate import CubicSpline
 
 # 生成的模具和相关文件保存在 ./data/mould_output/{mould_namt}
@@ -51,7 +52,7 @@ def gen_curve_2d(n, x_limit, a_limit, b_a_limit, length_limit):
     # print(cs(np.linspace(0, )) - curve)
     return cs(length_sample)
 
-def bezier_curve(n, control_points, length_limit):
+def bezier_curve_2(n, control_points, length_limit):
     '''
         n: number of points
         control points: first point need to be (0,0)
@@ -119,23 +120,48 @@ def get_points_from_stp(stp_path):
             for i in range(len(points)):
                 wp.write(f"{points[i][0]} {points[i][1]} {points[i][2]}\n")
 
+def bezier_curve(t, P0, P1, P2, P3):
+    return (1-t)**3 * P0 + 3*(1-t)**2 * t * P1 + 3*(1-t) * t**2 * P2 + t**3 * P3
 
+def residuals(params, t, data_points):
+    P0 = data_points[0]
+    P3 = data_points[-1]
+    P1, P2 = params.reshape((2, -1))
+    bezier_points = [bezier_curve(ti, P0, P1, P2, P3) for ti in t]
+    return (np.array(bezier_points) - data_points).ravel()
+
+def fit_bezier(data_points):
+    t = np.linspace(0, 1, len(data_points))
+    initial_guess = np.repeat(data_points.mean(axis=0, keepdims=True), 2, axis=0).ravel()
+    result = least_squares(residuals, initial_guess, args=(t, data_points))
+    P1, P2 = result.x.reshape((2, -1))
+    return data_points[0], P1, P2, data_points[-1]
 if __name__ == "__main__":
-    '''
-    curve_2d = gen_curve_2d(
+    
+    curve_2d_1 = gen_curve_2d(
         n=point_num,
         x_limit=(0, 40),
         a_limit=(150, 200),
         b_a_limit=(0.1, 0.4),
         length_limit=40,
     )
-    '''
     
-    control_points = [np.array([0,0]), np.array([25, -2]), np.array([30, -2]), np.array([40, -10])]
-    curve_2d = bezier_curve(n=point_num, control_points=control_points, length_limit=40)
+    data_points = np.array([curve_2d_1[0], curve_2d_1[700], curve_2d_1[1400], curve_2d_1[1999]])  # get data point from the original curve
+
+    P0, P1, P2, P3 = fit_bezier(data_points)  # get the control points
+
+    control_points = np.array([P0, P1, P2, P3])
+    print(f"Control Points: P0={P0}, P1={P1}, P2={P2}, P3={P3}")
+    
+    # control_points = [np.array([0,0]), np.array([25, -2]), np.array([30, -2]), np.array([40, -10])]
+    curve_2d = bezier_curve_2(n=point_num, control_points=control_points, length_limit=40)
+    x1 = curve_2d_1[:, 0]
+    y1 = curve_2d_1[:, 1]
     x = curve_2d[:,0]
     y = curve_2d[:,1]
-    plt.plot(x, y)
+    plt.plot(x1, y1, color="blue")
+    plt.plot(x, y, color="red")
+    plt.scatter(control_points[:,0], control_points[:,1], color='black', edgecolor='black', zorder=5)
     plt.show()
     # curve_3d_0 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1))))
     # curve_3d_1 = np.hstack((curve_2d, np.zeros((curve_2d.shape[0], 1)) + 1))
